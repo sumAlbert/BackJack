@@ -6,7 +6,8 @@ import java.io.IOException;
 
 public class BackJack extends HttpServlet{
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        System.out.println("123");
+        String command=(String) req.getParameter("command");
+        System.out.println(command);
     }
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         doPost(req,resp);
