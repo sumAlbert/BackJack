@@ -8,10 +8,15 @@ import java.io.PrintWriter;
 public class BackJack extends HttpServlet{
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         String command=(String) req.getParameter("command");
+        PrintWriter printWriter=resp.getWriter();
         switch (command){
             case "test":
-                PrintWriter printWriter=resp.getWriter();
                 printWriter.print("{\"resultCode\":true,\"cards\":[\"a1\",\"a2\"]}");
+                printWriter.close();
+                break;
+            case "bet":
+                String value=(String) req.getParameter("value");
+                printWriter.print("{\"resultCode\":true,\"cards\":[\"a1\",\"a2\"],\"state\":\" \"}");
                 printWriter.close();
                 break;
             default:
