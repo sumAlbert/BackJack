@@ -5,7 +5,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.io.PrintWriter;
 
-public class BackJack extends HttpServlet{
+public class BlackJack extends HttpServlet{
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         String command=(String) req.getParameter("command");
         PrintWriter printWriter=resp.getWriter();

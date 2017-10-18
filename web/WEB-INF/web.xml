@@ -4,11 +4,11 @@
          xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-app_3_1.xsd"
          version="3.1">
     <servlet>
-        <servlet-name>BackJack</servlet-name>
-        <servlet-class>BackJack</servlet-class>
+        <servlet-name>BlackJack</servlet-name>
+        <servlet-class>BlackJack</servlet-class>
     </servlet>
     <servlet-mapping>
-        <servlet-name>BackJack</servlet-name>
-        <url-pattern>/BackJack</url-pattern>
+        <servlet-name>BlackJack</servlet-name>
+        <url-pattern>/BlackJack</url-pattern>
     </servlet-mapping>
 </web-app>
