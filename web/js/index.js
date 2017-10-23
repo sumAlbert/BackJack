@@ -6,7 +6,11 @@ $(document).ready(function(){
     var offsetY;// y-direction offset to ensure the coin not go over the circle
     var coinsNum=[0,0,0];
     var play0Num=0;
-    var cardsPlay0Deg=[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0];
+    var play1Num=0;
+    var bankNum=0;
+    var cardsPlay0Deg=[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0];
+    var cardsPlay1Deg=[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0];
+    var cardsBankDeg=[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0];
     //transform control
 
     //function to execute after init web
@@ -23,7 +27,9 @@ $(document).ready(function(){
     });
     /*add cards*/
     $("#getCard").click(function () {
-        addCardPlay0Display("A2");
+        addCardPlay1Display("A3");
+        addCardPlay0Display("bg");
+        addCardBankDisplay("A2");
     });
 
     $.ajax({
@@ -41,6 +47,7 @@ $(document).ready(function(){
        }
     });
 
+    //some operations about coins
     /*create coin and change its position*/
     function addCoinDisplay(value){
         /*create DOM*/
@@ -99,7 +106,6 @@ $(document).ready(function(){
                 break;
         }
     }
-
     /*change back coin position and remove it*/
     function removeCoinDisplay(event){
         switch (event.data.value){
@@ -129,6 +135,8 @@ $(document).ready(function(){
         }
     }
 
+
+    //some operations about cards of play0
     /*create card and change its card*/
     function addCardPlay0Display(cardName){
         var play0ID="play0-"+play0Num;
@@ -143,21 +151,19 @@ $(document).ready(function(){
             sendCardPlay0Display(play0ID);
             play0Num++;
             getNextPlay0Degs();
-            correctCardPositionDisplay(0);
+            correctPlay0CardPositionDisplay(0);
         },0);
     }
-
     /*send card to play*/
     function sendCardPlay0Display(play0ID){
         var rotate_deg=cardsPlay0Deg[play0Num]+"deg";
         $("#"+play0ID).css({"left":"calc( 50% - 4.5em)","top":"calc(100% - 15.5em)","transform":"rotate("+rotate_deg+")"})
     }
-
     /*change rotate after put good position*/
-    function correctCardPositionDisplay(value){
+    function correctPlay0CardPositionDisplay(value){
         if(value<play0Num-1){
             setTimeout(function () {
-                correctCardPositionDisplay(value+1);
+                correctPlay0CardPositionDisplay(value+1);
             },0);
         }
         var playOID="play0-"+value;
@@ -166,7 +172,79 @@ $(document).ready(function(){
     }
 
 
+    //some operations about cards of play1
+    /*create card and change its card*/
+    function addCardPlay1Display(cardName){
+        var playID="play1-"+play1Num;
+        var DOM_Prefix="            <div class=\"init-bg-card-3\" id=\"" +playID+
+            "\">\n" +
+            "              <img src=\"img/cards/";
+        var DOM_Postfix=".png\" class=\"card\">\n" +
+            "            </div>";
+        var DOM_card=DOM_Prefix+cardName+DOM_Postfix;
+        $(".game-cards-column").append(DOM_card);
+        setTimeout(function () {
+            sendCardPlay1Display(playID);
+            play1Num++;
+            getNextPlay1Degs();
+            correctPlay1CardPositionDisplay(0);
+        },0);
+    }
+    /*send card to play*/
+    function sendCardPlay1Display(playID){
+        var rotate_deg=cardsPlay1Deg[play1Num]+"deg";
+        $("#"+playID).css({"left":"calc( 80% - 4.5em)","top":"calc(50% - 5.5em)","transform":"rotate("+rotate_deg+")"})
+    }
+    /*change rotate after put good position*/
+    function correctPlay1CardPositionDisplay(value){
+        if(value<play1Num-1){
+            setTimeout(function () {
+                correctPlay1CardPositionDisplay(value+1);
+            },0);
+        }
+        var playID="play1-"+value;
+        var rotate_deg=cardsPlay1Deg[value]+"deg";
+        $("#"+playID).css({"transform":"rotate("+rotate_deg+")"});
+    }
 
+
+    //some operations about cards of bank
+    /*create card and change its card*/
+    function addCardBankDisplay(cardName){
+        var bankID="bank-"+bankNum;
+        var DOM_Prefix="            <div class=\"init-bg-card-3\" id=\"" +bankID+
+            "\">\n" +
+            "              <img src=\"img/cards/";
+        var DOM_Postfix=".png\" class=\"card\">\n" +
+            "            </div>";
+        var DOM_card=DOM_Prefix+cardName+DOM_Postfix;
+        $(".game-cards-column").append(DOM_card);
+        setTimeout(function () {
+            sendCardBankDisplay(bankID);
+            bankNum++;
+            getNextBankDegs();
+            correctBankCardPositionDisplay(0);
+        },0);
+    }
+    /*send card to play*/
+    function sendCardBankDisplay(bankID){
+        var rotate_deg=cardsBankDeg[bankNum]+"deg";
+        $("#"+bankID).css({"left":"calc( 50% - 4.5em)","top":"calc(0% + 2.5em)","transform":"rotate("+rotate_deg+")"})
+    }
+    /*change rotate after put good position*/
+    function correctBankCardPositionDisplay(value){
+        if(value<bankNum-1){
+            setTimeout(function () {
+                correctBankCardPositionDisplay(value+1);
+            },0);
+        }
+        var bankID="bank-"+value;
+        var rotate_deg=cardsBankDeg[value]+"deg";
+        $("#"+bankID).css({"transform":"rotate("+rotate_deg+")"});
+    }
+
+
+    //some assistance function
     /*get next degs after require card*/
     function getNextPlay0Degs(){
         var startDeg=(1-play0Num)*15/2;
@@ -176,7 +254,22 @@ $(document).ready(function(){
         }
         console.log(cardsPlay0Deg);
     }
-
+    function getNextBankDegs(){
+        var startDeg=(1-bankNum)*15/2;
+        for(var i=0;i<=bankNum;i++){
+            cardsBankDeg[i]=startDeg;
+            startDeg=startDeg+15;
+        }
+        console.log(cardsBankDeg);
+    }
+    function getNextPlay1Degs(){
+        var startDeg=(1-play1Num)*15/2;
+        for(var i=0;i<=play1Num;i++){
+            cardsPlay1Deg[i]=startDeg;
+            startDeg=startDeg+15;
+        }
+        console.log(cardsBankDeg);
+    }
     /*get offsetX and offsetY in the unit circle */
     function getOffset(){
         var angle=Math.random()*3600;
