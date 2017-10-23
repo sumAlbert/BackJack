@@ -15,18 +15,8 @@ public class BlackJack extends HttpServlet{
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         String command=(String) req.getParameter("command");
         String value;
-        String state = "";
         PrintWriter printWriter=resp.getWriter();
         switch (command){
-            case "test":
-                printWriter.print("{\"resultCode\":true,\"cards\":[\"a1\",\"a2\"]}");
-                printWriter.close();
-                break;
-            case "testbet":
-                value = (String) req.getParameter("value");
-                printWriter.print("{\"resultCode\":true,\"cards\":[\"a1\",\"a2\"],\"state\":\" \"}");
-                printWriter.close();
-                break;
             case "bet":
                 value = (String) req.getParameter("value");
                 int[] storeBet = new int[2];
@@ -38,29 +28,19 @@ public class BlackJack extends HttpServlet{
                 ArrayList<String> dealCards;
                 dealCards = game.deal();
                 Iterator<String> itDeal = dealCards.iterator();
-                String cardsDeal ="[";
+                String cardsDeal = "[";
                 while (itDeal.hasNext()) {
                     String s = itDeal.next();
                     cardsDeal = cardsDeal + "\"" + s + "\",";
                 }
-                cardsDeal = cardsDeal.substring(0,cardsDeal.length()-1);
-                cardsDeal = cardsDeal + "]";
+                cardsDeal = cardsDeal.substring(0, cardsDeal.length()-1) + "]";
                 printWriter.print("{\"resultCode\":true,\"state\":" + game.getState() + ",\"cards\":" + cardsDeal + "}");
                 printWriter.close();
                 break;
             case "hit":
                 value = (String) req.getParameter("value");
-                ArrayList<String> addCards;
-                addCards = game.addCard(value);
-                Iterator<String> itHit = addCards.iterator();
-                String cardsHit ="[";
-                while (itHit.hasNext()) {
-                    String s = itHit.next();
-                    cardsHit = cardsHit + "\"" + s + "\",";
-                }
-                cardsHit = cardsHit.substring(0,cardsHit.length()-1);
-                cardsHit = cardsHit + "]";
-                printWriter.print("{\"resultCode\":true,\"state\":" + game.getState() + ",\"cards\":" + cardsHit + "}");
+                String addCard = game.addCard();
+                printWriter.print("{\"resultCode\":true,\"state\":" + game.getState() + ",\"cards\":[" + addCard + "]}");
                 printWriter.close();
                 break;
             case "double":
@@ -71,7 +51,20 @@ public class BlackJack extends HttpServlet{
                 break;
             case "insurance":
                 String stateInsurance = game.buyInsurance();
-                printWriter.print("{\"resultCode\":true,\"state\":" + game.getState() + "}");
+                printWriter.print("{\"resultCode\":true,\"state\":" + stateInsurance + "}");
+                printWriter.close();
+                break;
+            case "pass":
+                ArrayList<String> addedCards = new ArrayList<>();
+                addedCards = game.pass();
+                Iterator<String> itPass = addedCards.iterator();
+                String cardsPass = "[";
+                while(itPass.hasNext()) {
+                    String s = itPass.next();
+                    cardsPass = cardsPass + "\"" + s + "\",";
+                }
+                cardsPass = cardsPass.substring(0, cardsPass.length()-1) + "]";
+                printWriter.print("{\"resultCode\":true,\"state\":" + game.getState() +",\"cards\":" + cardsPass +"}");
                 printWriter.close();
                 break;
             case  "again":
