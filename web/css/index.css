@@ -1,0 +1,25 @@
+/*default setting*/
+html,body{margin:0;padding: 0;height: 100%;width: 100%;}
+.content{height: 100vh;width: 100vw;display: block;background: #292a2f;}
+
+
+/*game interface setting*/
+.game-interface{height: 100%;width: 100%;display: flex;flex-direction: column;}
+.game-control{height: 6em;width: 100%;display: flex;justify-content: center;flex-direction: row;align-items: flex-start;}
+.game-display{flex: 1;width: 100%;z-index: 0;position: relative;}
+
+/*game control button at the bottom of the page*/
+.game-button{height: 2.5em;line-height:2.5em;width: 8em;margin: 0 .5em;color: white;font-size: 95%;text-align: center;border-radius: 5px;user-select: none;}
+.game-button-inactive{background: #949494;}
+.game-button-active{background: #1a9ad7;cursor: pointer;}
+
+
+/*game coin column*/
+.game-coins-column{height: 100%;width: 14em;position: absolute;left: 13%;}
+.game-coins-column-circle{width: 11em;height: 11em;border-radius: 50% 50%;border: .2em solid white;position: absolute;left: calc(50% - 5.5em);top: calc(40% - 6.5em);}
+.game-coins-column-coins{width: 11em;height: 11em;border-radius: 50% 50%;border: .2em solid transparent;position: absolute;left: calc(50% - 5.5em);top: calc(100% - 13em);}
+.game-coins-cover{width: 100%;text-align: center;position: absolute;top: calc(50% + 1.5em);color: white;font-size: 120%;}
+.game-coins-column-20{position: absolute;height: 4em;width: 4em;background: url("../img/coin/coin_20.png") center center no-repeat;background-size: 100% 100%;left: calc(50% - 2em);user-select: none;cursor: pointer}
+.game-coins-column-50{position: absolute;height: 4em;width: 4em;background: url("../img/coin/coin_50.png") center center no-repeat;background-size: 100% 100%;left: calc(30% - 2em);top: 4em;user-select: none;cursor: pointer}
+.game-coins-column-100{position: absolute;height: 4em;width: 4em;background: url("../img/coin/coin_100.png") center center no-repeat;background-size: 100% 100%;left: calc(70% - 2em);top: 4em;user-select: none;cursor: pointer}
+.game-coins-save{width: 100%;text-align: center;position: absolute;top: calc(100% - 3em);color: white;font-size: 120%;}
