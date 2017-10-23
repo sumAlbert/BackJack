@@ -14,7 +14,7 @@ public class Cash {//Record player's cash
 
     public int getBet() { return bet; }
     public void setBet(int bet) { this.bet = bet; }
-    public int getCash() { return cash; }
+    public int getMyCash() { return cash; }
 
     /*
     Buy Insurance:
@@ -45,8 +45,6 @@ public class Cash {//Record player's cash
                 double d = cash + bet*1.5;
                 cash = (int)d;
                 break;
-
-
         }
     }
 

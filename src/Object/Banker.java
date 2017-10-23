@@ -19,6 +19,8 @@ public class Banker {
         return hand;
     }
 
+    public void setHand(Hand hand) { this.hand = hand; }
+
     public boolean isBlackJack() { return point.isBlackjack(); }
 
     public void setLose(boolean a) {}
