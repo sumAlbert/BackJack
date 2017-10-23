@@ -5,9 +5,13 @@ $(document).ready(function(){
     var offsetX;// x-direction offset to ensure the coin not go over the circle
     var offsetY;// y-direction offset to ensure the coin not go over the circle
     var coinsNum=[0,0,0];
+    var play0Num=0;
+    var cardsPlay0Deg=[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0];
     //transform control
 
     //function to execute after init web
+    sendCardPlay0Display();
+    /*add coins*/
     $(".game-coins-column-20").click(function () {
         addCoinDisplay(20);
     });
@@ -16,6 +20,10 @@ $(document).ready(function(){
     });
     $(".game-coins-column-100").click(function () {
         addCoinDisplay(100);
+    });
+    /*add cards*/
+    $("#getCard").click(function () {
+        addCardPlay0Display("A2");
     });
 
     $.ajax({
@@ -121,6 +129,54 @@ $(document).ready(function(){
         }
     }
 
+    /*create card and change its card*/
+    function addCardPlay0Display(cardName){
+        var play0ID="play0-"+play0Num;
+        var DOM_Prefix="            <div class=\"init-bg-card-3\" id=\"" +play0ID+
+            "\">\n" +
+            "              <img src=\"img/cards/";
+        var DOM_Postfix=".png\" class=\"card\">\n" +
+            "            </div>";
+        var DOM_card=DOM_Prefix+cardName+DOM_Postfix;
+        $(".game-cards-column").append(DOM_card);
+        setTimeout(function () {
+            sendCardPlay0Display(play0ID);
+            play0Num++;
+            getNextPlay0Degs();
+            correctCardPositionDisplay(0);
+        },0);
+    }
+
+    /*send card to play*/
+    function sendCardPlay0Display(play0ID){
+        var rotate_deg=cardsPlay0Deg[play0Num]+"deg";
+        $("#"+play0ID).css({"left":"calc( 50% - 4.5em)","top":"calc(100% - 15.5em)","transform":"rotate("+rotate_deg+")"})
+    }
+
+    /*change rotate after put good position*/
+    function correctCardPositionDisplay(value){
+        if(value<play0Num-1){
+            setTimeout(function () {
+                correctCardPositionDisplay(value+1);
+            },0);
+        }
+        var playOID="play0-"+value;
+        var rotate_deg=cardsPlay0Deg[value]+"deg";
+        $("#"+playOID).css({"transform":"rotate("+rotate_deg+")"});
+    }
+
+
+
+    /*get next degs after require card*/
+    function getNextPlay0Degs(){
+        var startDeg=(1-play0Num)*15/2;
+        for(var i=0;i<=play0Num;i++){
+            cardsPlay0Deg[i]=startDeg;
+            startDeg=startDeg+15;
+        }
+        console.log(cardsPlay0Deg);
+    }
+
     /*get offsetX and offsetY in the unit circle */
     function getOffset(){
         var angle=Math.random()*3600;
@@ -129,4 +185,5 @@ $(document).ready(function(){
         offsetX=Math.sin(angle)*radius;
         offsetY=Math.cos(angle)*radius;
     }
+
 });

@@ -16,6 +16,7 @@ html,body{margin:0;padding: 0;height: 100%;width: 100%;}
 
 /*game coin column*/
 .game-coins-column{height: 100%;width: 14em;position: absolute;left: 13%;}
+.game-coins-column-header{width: 13em;height: 7.5em;background: url("../img/decorate/header.png") center center no-repeat;background-size: 100% 100%;position: absolute;left: calc(50% - 6.5em)}
 .game-coins-column-circle{width: 11em;height: 11em;border-radius: 50% 50%;border: .2em solid white;position: absolute;left: calc(50% - 5.5em);top: calc(40% - 6.5em);}
 .game-coins-column-coins{width: 11em;height: 11em;border-radius: 50% 50%;border: .2em solid transparent;position: absolute;left: calc(50% - 5.5em);top: calc(100% - 13em);}
 .game-coins-cover{width: 100%;text-align: center;position: absolute;top: calc(50% + 1.5em);color: white;font-size: 120%;}
@@ -23,3 +24,12 @@ html,body{margin:0;padding: 0;height: 100%;width: 100%;}
 .game-coins-column-50{position: absolute;height: 4em;width: 4em;background: url("../img/coin/coin_50.png") center center no-repeat;background-size: 100% 100%;left: calc(30% - 2em);top: 4em;user-select: none;cursor: pointer;transition: all 1s;}
 .game-coins-column-100{position: absolute;height: 4em;width: 4em;background: url("../img/coin/coin_100.png") center center no-repeat;background-size: 100% 100%;left: calc(70% - 2em);top: 4em;user-select: none;cursor: pointer;transition: all 1s;}
 .game-coins-save{width: 100%;text-align: center;position: absolute;top: calc(100% - 3em);color: white;font-size: 120%;}
+
+/*game card column*/
+.game-cards-column{height: 100%;width: 100%;background: transparent;position: absolute;overflow: hidden;}
+.envelop-bottom{height: 16em;position: absolute;width: 8.98em;transform: rotate(-25deg);background: url("../img/decorate/bottom.png") center center no-repeat;background-size: 100% 100%;left: calc(100% - 11em);top: -4em;}
+.init-bg-card-1{height: 11.97em;width: 9em;position: absolute;transform: rotate(-25deg);left: calc(100% - 6em);top: -2.5em;z-index: 1;transform-origin: 50% 100%;}
+.init-bg-card-2{height: 11.97em;width: 9em;position: absolute;transform: rotate(-25deg);left: calc(100% - 7em);top: -3em;z-index: 3;transform-origin: 50% 100%;}
+.init-bg-card-3{height: 11.97em;width: 9em;position: absolute;transform: rotate(-25deg);left: calc(100% - 7em);top: -3em;z-index: 2;transform-origin: 50% 100%;transition: all 1s;}
+.envelop-upper{height: 16em;position: absolute;width: 8.98em;transform: rotate(-25deg);background: #5e5e5e;left: calc(100% - 8em);top: -6em;z-index: 4;}
+.card{height: 100%;width: 100%;}
