@@ -24,10 +24,8 @@ public class Game {
 
     public String getState() { return state; }
     public boolean isGameOver() { return isGameOver; }
-
     public boolean isPlayerBoom() { return player.isLose(); }
     public boolean isPlayer2Boom() { return player2.isLose(); }
-
     public int getPlayerScore() { return player.getPoint().getMyPoint(player.getHand()); }
 
     public int[] bet(int betNum) {//make bet
