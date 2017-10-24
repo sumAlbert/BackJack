@@ -60,9 +60,9 @@ public class Game {
         int playerPoint = player.getPoint().getMyPoint(player.getHand());
         int player2Point = player2.getPoint().getMyPoint(player2.getHand());
         totalCards.add("*");
-        totalCards.add(Integer.toString(playerPoint));
-        totalCards.add(Integer.toString(player2Point));
         totalCards.add(Integer.toString(playerMinPoint));
+        totalCards.add(Integer.toString(player2Point));
+        totalCards.add(Integer.toString(playerPoint));
         return totalCards;
     }
 
