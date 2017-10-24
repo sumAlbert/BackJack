@@ -105,6 +105,9 @@ public class Game {
         if(!player2.isLose() || !player.isLose()) {
             addedCard = addToBanker(addedCard);
         }
+        addedCard.add("?");
+        addedCard.add(Integer.toString(player2.getPoint().getMyPoint(player.getHand())));
+        addedCard.add(Integer.toString(banker.getPoint().getMyPoint(banker.getHand())));
         return addedCard;
     }
 

@@ -28,14 +28,14 @@ public class BlackJack extends HttpServlet{
                 ArrayList<String> dealCards;
                 dealCards = game.deal();
                 Iterator<String> itDeal = dealCards.iterator();
-                boolean isSpilted = false;
+                boolean isSpiltedDeal = false;
                 String pointDeal = "[";
                 String cardsDeal = "[";
                 while (itDeal.hasNext()) {
                     String s = itDeal.next();
-                    if(s == "*") { isSpilted = true; }
+                    if(s .equals("*") ) { isSpiltedDeal = true; }
                     else {
-                        if(!isSpilted) {
+                        if(!isSpiltedDeal) {
                             cardsDeal = cardsDeal + "\"" + s + "\",";
                         }
                         else {
@@ -82,12 +82,25 @@ public class BlackJack extends HttpServlet{
                 ArrayList<String> addedCards = new ArrayList<>();
                 addedCards = game.pass();
                 Iterator<String> itPass = addedCards.iterator();
+                boolean isSplitedPass = false;
+                String pointPass = "[";
                 String cardsPass = "[";
                 while(itPass.hasNext()) {
                     String s = itPass.next();
-                    cardsPass = cardsPass + "\"" + s + "\",";
+                    if(s.equals("?")) {
+                        isSplitedPass = true;
+                    }
+                    else {
+                        if(isSplitedPass) {
+                            pointPass = pointPass + "\"" + s + "\",";
+                        }
+                        else {
+                            cardsPass = cardsPass + "\"" + s + "\",";
+                        }
+                    }
                 }
                 cardsPass = cardsPass.substring(0, cardsPass.length()-1) + "]";
+                pointPass = pointPass.substring(0, pointPass.length()-1) + "]";
                 String boomPass;
                 if(game.isPlayer2Boom()) {
                     boomPass = "true";
@@ -95,7 +108,7 @@ public class BlackJack extends HttpServlet{
                 else {
                     boomPass = "false";
                 }
-                printWriter.print("{\"resultCode\":true,\"state\":" + game.getState() +",\"cards\":" + cardsPass + ",\"boom\":"+ boomPass + "}");
+                printWriter.print("{\"resultCode\":true,\"state\":" + game.getState() +",\"cards\":" + cardsPass + ",\"boom\":"+ boomPass + ",\"scores\":" + pointPass + "}");
                 printWriter.close();
                 break;
             case  "again":
