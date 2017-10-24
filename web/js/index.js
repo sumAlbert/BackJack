@@ -14,38 +14,107 @@ $(document).ready(function(){
     //transform control
 
     //function to execute after init web
-    sendCardPlay0Display();
+    initAndAgain();
+
     /*add coins*/
     $(".game-coins-column-20").click(function () {
-        addCoinDisplay(20);
+        $.ajax({
+            url: 'BlackJack',
+            data:{
+                command: 'bet',
+                value: '20'
+            },
+            success: function (data) {
+                var JSON_data=JSON.parse(data);
+                if(JSON_data.resultCode){
+                    changeBetMoney(JSON_data.bet_money);
+                    changeSaveMoney(JSON_data.money);
+                }
+                addCoinDisplay(20)
+            },
+            error: function () {
+                console.log("failure");
+            }
+        });
     });
     $(".game-coins-column-50").click(function () {
-        addCoinDisplay(50);
+        $.ajax({
+            url: 'BlackJack',
+            data:{
+                command: 'bet',
+                value: '50'
+            },
+            success: function (data) {
+                var JSON_data=JSON.parse(data);
+                if(JSON_data.resultCode){
+                    changeBetMoney(JSON_data.bet_money);
+                    changeSaveMoney(JSON_data.money);
+                }
+                addCoinDisplay(50)
+            },
+            error: function () {
+                console.log("failure");
+            }
+        });
     });
     $(".game-coins-column-100").click(function () {
-        addCoinDisplay(100);
+        $.ajax({
+            url: 'BlackJack',
+            data:{
+                command: 'bet',
+                value: '100'
+            },
+            success: function (data) {
+                var JSON_data=JSON.parse(data);
+                if(JSON_data.resultCode){
+                    changeBetMoney(JSON_data.bet_money);
+                    changeSaveMoney(JSON_data.money);
+                }
+                addCoinDisplay(100)
+            },
+            error: function () {
+                console.log("failure");
+            }
+        });
     });
     /*add cards*/
     $("#getCard").click(function () {
-        addCardPlay1Display("A3");
-        addCardPlay0Display("bg");
-        addCardBankDisplay("A2");
+        if(play0Num){
+            $.ajax({
+                url: 'BlackJack',
+                data:{
+                    command: 'hit'
+                },
+                success: function (data) {
+                    var JSON_data=JSON.parse(data);
+                    if(JSON_data.resultCode){
+                    }
+                },
+                error: function () {
+                    console.log("failure");
+                }
+            });
+        }
     });
 
-    $.ajax({
-       url: 'BackJack',
-       data:{
-           command: 'test'
-       },
-       success: function (data) {
-           console.log(data);
-           var JSON_data=JSON.parse(data);
-           console.log(JSON_data["cards"][0]);
-       },
-       error: function () {
-           console.log("failure");
-       }
-    });
+    // $.ajax({
+    //     url: 'BlackJack',
+    //     data:{
+    //         command: 'bet',
+    //         value: '100'
+    //     },
+    //     success: function (data) {
+    //         var JSON_data=JSON.parse(data);
+    //         if(JSON_data.resultCode){
+    //             changeBetMoney(JSON_data.bet_money);
+    //             changeSaveMoney(JSON_data.money);
+    //         }
+    //         addCoinDisplay(100)
+    //     },
+    //     error: function () {
+    //         console.log("failure");
+    //     }
+    // });
 
     //some operations about coins
     /*create coin and change its position*/
@@ -172,6 +241,26 @@ $(document).ready(function(){
     }
 
 
+    //some operation about play again
+    function initAndAgain(){
+        $.ajax({
+           url: 'BlackJack',
+           data:{
+               command: 'again'
+           },
+           success: function (data) {
+               var JSON_data=JSON.parse(data);
+               if(JSON_data.resultCode){
+                    console.log("preparation is Ok");
+               }
+           },
+           error: function () {
+               console.log("failure");
+           }
+        });
+    }
+
+
     //some operations about cards of play1
     /*create card and change its card*/
     function addCardPlay1Display(cardName){
@@ -243,6 +332,12 @@ $(document).ready(function(){
         $("#"+bankID).css({"transform":"rotate("+rotate_deg+")"});
     }
 
+    //TODO who is the success man
+    //some operation about flag
+    function whoSuccess(name){
+
+    }
+
 
     //some assistance function
     /*get next degs after require card*/
@@ -278,5 +373,12 @@ $(document).ready(function(){
         offsetX=Math.sin(angle)*radius;
         offsetY=Math.cos(angle)*radius;
     }
-
+    /*change save money*/
+    function changeSaveMoney(money){
+        $(".game-coins-save").html("现金：$"+money);
+    }
+    /*change bet money*/
+    function changeBetMoney(money){
+        $(".game-coins-cover").html("押注：$"+money);
+    }
 });
