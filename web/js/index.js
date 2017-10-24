@@ -91,9 +91,9 @@ $(document).ready(function(){
                     var JSON_data=JSON.parse(data);
                     if(JSON_data.resultCode){
                         if(JSON_data.state!=""){
-                            if(JSON_data.state=="/player")
+                            if(JSON_data.state=="player")
                                 whoSuccess("你");
-                            else if(JSON_data.state=="/player2")
+                            else if(JSON_data.state=="player2")
                                 whoSuccess("玩家二");
                             else
                                 whoSuccess(JSON_data.state);
@@ -122,9 +122,9 @@ $(document).ready(function(){
                     var JSON_data=JSON.parse(data);
                     if(JSON_data.resultCode){
                         if(JSON_data.state!=""){
-                            if(JSON_data.state=="/player")
+                            if(JSON_data.state=="player")
                                 whoSuccess("你");
-                            else if(JSON_data.state=="/player2")
+                            else if(JSON_data.state=="player2")
                                 whoSuccess("玩家二");
                             else
                                 whoSuccess(JSON_data.state);
