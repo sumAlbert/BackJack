@@ -5,16 +5,16 @@ import java.util.ArrayList;
 /**
  * Created by danielliang on 2017/10/17.
  */
-public class Player {
+public class Player extends Banker{
     private Cash cash;//Record current coins(The default is 1000)
-    private Point point;//Record points in hand
-    private Hand hand;//Store the cards that player is handing
     private boolean isLose = false;//Judge whether lose or not
 
     public Player() {
+        super();
         cash = new Cash();
         point = new Point();
         hand = new Hand();
+        isLose = false;
     }
 
     public Cash getCash() {
@@ -22,10 +22,6 @@ public class Player {
     }
 
     public void setCash(Cash cash) { this.cash = cash; }
-
-    public Point getPoint() { return point; }
-
-    public void setPoint(Point point) { this.point = point; }
 
     public boolean isLose() {
         return isLose;
@@ -35,11 +31,4 @@ public class Player {
         isLose = lose;
     }
 
-    public Hand getHand() {
-        return hand;
-    }
-
-    public void setHand(Hand hand) {
-        this.hand = hand;
-    }
 }

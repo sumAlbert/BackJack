@@ -4,9 +4,8 @@ package Object;
  * Created by danielliang on 2017/10/18.
  */
 public class Banker {
-    private Point point;//Record points in hand
-    private Hand hand;//Store the cards that player is handing
-    private boolean isLose = false;//Judge whether lose or not
+    protected Point point;//Record points in hand
+    protected Hand hand;//Store the cards that player is handing
 
     public Banker(){
         point = new Point();
@@ -15,13 +14,12 @@ public class Banker {
 
     public Point getPoint() { return point; }
 
+    public void setPoint(Point point) { this.point = point; }
+
     public Hand getHand() {
         return hand;
     }
 
     public void setHand(Hand hand) { this.hand = hand; }
 
-    public boolean isBlackJack() { return point.isBlackjack(); }
-
-    public void setLose(boolean a) {}
 }
