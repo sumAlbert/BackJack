@@ -67,7 +67,7 @@ public class Game {
     public String addCard() {//Add card to player
         String newPok = poker.getNextCard();
         player.getHand().addCard(newPok);
-        if(banker.getPoint().getMyPoint(banker.getHand()) > 21) {
+        if(player.getPoint().getMyPoint(player.getHand()) > 21) {
             player.setLose(true);
         }
         return newPok;
