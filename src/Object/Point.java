@@ -13,11 +13,7 @@ public class Point {//calculate the total point of card
         point = 0;
     }
 
-    public boolean isBlackjack() {
-        return point == 21;
-    }
-
-    public int getMyPoint(Hand totalCard) {//Get total point og cards in hand
+    public int getMyPoint(Hand totalCard) {//Get total point of cards in hand
         point = 0;
         boolean hasA = false;//Judge whether has an A
         ArrayList<String> cards = totalCard.getHandCard();
@@ -70,7 +66,7 @@ public class Point {//calculate the total point of card
         return point;
     }
 
-    public int getMinPoint(Hand totalCard) {
+    public int getMinPoint(Hand totalCard) {//Get the minimum point of cards in hand.（Considering including A）
         point = 0;
         ArrayList<String> cards = totalCard.getHandCard();
         Iterator<String> it = cards.iterator();
