@@ -57,7 +57,7 @@ public class BlackJack extends HttpServlet{
                 else {
                     boomHit = "false";
                 }
-                printWriter.print("{\"resultCode\":true,\"state\":" + game.getState() + ",\"cards\":[" + addCard + "],\"boom\":" + boomHit +",\"scores\":[\"" + game.getPlayerScore() +"\"]}");
+                printWriter.print("{\"resultCode\":true,\"cards\":[" + addCard + "],\"boom\":" + boomHit +",\"scores\":[\"" + game.getPlayerScore() +"\"]}");
                 printWriter.close();
                 break;
             case "double":
