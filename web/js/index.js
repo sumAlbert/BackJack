@@ -78,6 +78,7 @@ $(document).ready(function(){
             }
         });
     });
+
     /*add cards*/
     $("#getCard").click(function () {
         if(play0Num){
@@ -119,38 +120,28 @@ $(document).ready(function(){
                 },
                 success: function (data) {
                     console.log(data);
-                    var JSON_data=JSON.parse(data);
-                    if(JSON_data.resultCode){
-                        if(JSON_data.state!=""){
-                            if(JSON_data.state=="player")
-                                whoSuccess("你");
-                            else if(JSON_data.state=="player2")
-                                whoSuccess("玩家二");
-                            else
-                                whoSuccess(JSON_data.state);
-                        }
-                        else{
-                            bgCard=JSON_data.cards[0];
-                            setTimeout(function () {
-                                addCardBankDisplay("bg");
-                            },0);
-                            setTimeout(function () {
-                                addCardPlay0Display(JSON_data.cards[1]);
-                            },800);
-                            setTimeout(function () {
-                                addCardPlay1Display(JSON_data.cards[2]);
-                            },1600);
-                            setTimeout(function () {
-                                addCardBankDisplay(JSON_data.cards[3]);
-                            },2400);
-                            setTimeout(function () {
-                                addCardPlay0Display(JSON_data.cards[4]);
-                            },3200);
-                            setTimeout(function () {
-                                addCardPlay1Display(JSON_data.cards[5]);
-                            },4000);
-                        }
-                    }
+                    // var JSON_data=JSON.parse(data);
+                    // if(JSON_data.resultCode){
+                    //     bgCard=JSON_data.cards[0];
+                    //     setTimeout(function () {
+                    //         addCardBankDisplay(JSON_data.cards[3]);
+                    //     },0);
+                    //     setTimeout(function () {
+                    //         addCardPlay0Display(JSON_data.cards[1]);
+                    //     },800);
+                    //     setTimeout(function () {
+                    //         addCardPlay1Display(JSON_data.cards[2]);
+                    //     },1600);
+                    //     setTimeout(function () {
+                    //         addCardBankDisplay("bg");
+                    //     },2400);
+                    //     setTimeout(function () {
+                    //         addCardPlay0Display(JSON_data.cards[4]);
+                    //     },3200);
+                    //     setTimeout(function () {
+                    //         addCardPlay1Display(JSON_data.cards[5]);
+                    //     },4000);
+                    // }
                 },
                 error: function () {
                     console.log("failure");
