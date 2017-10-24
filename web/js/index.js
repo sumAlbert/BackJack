@@ -177,7 +177,6 @@ $(document).ready(function(){
                     command: 'insurance'
                 },
                 success: function (data) {
-                    console.log(data);
                     var JSON_data=JSON.parse(data);
                     if(JSON_data.resultCode){
                         changeSaveMoney(JSON_data.money);
