@@ -6,14 +6,20 @@ package Object;
 public class Cash {//Record player's cash
     private int bet;
     private int cash;
+    private int temBet;//Add it to bet
 
     public Cash(){
         bet = 0;
         cash = 1000;
+        temBet = 0;
     }
 
     public int getBet() { return bet; }
-    public void setBet(int bet) { this.bet = bet; }
+    public void addBetInSeqence(int money)
+    {
+        bet = bet + money;
+        temBet = money;
+    }
     public int getMyCash() { return cash; }
 
     /*
@@ -24,7 +30,7 @@ public class Cash {//Record player's cash
     public void update(int i) {//Analyse different stuations:1 bet but not end;2 double;5 lose;6 equal;7 win
         switch (i) {
             case 1:
-                cash = cash - bet;
+                cash = cash - temBet;
                 break;
             case 2:
                 cash = cash - bet;

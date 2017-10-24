@@ -28,25 +28,49 @@ public class BlackJack extends HttpServlet{
                 ArrayList<String> dealCards;
                 dealCards = game.deal();
                 Iterator<String> itDeal = dealCards.iterator();
+                boolean isSpilted = false;
+                String pointDeal = "[";
                 String cardsDeal = "[";
                 while (itDeal.hasNext()) {
                     String s = itDeal.next();
-                    cardsDeal = cardsDeal + "\"" + s + "\",";
+                    if(s == "*") { isSpilted = true; }
+                    else {
+                        if(!isSpilted) {
+                            cardsDeal = cardsDeal + "\"" + s + "\",";
+                        }
+                        else {
+                            pointDeal = pointDeal + "\"" + s + "\",";
+                        }
+                    }
                 }
                 cardsDeal = cardsDeal.substring(0, cardsDeal.length()-1) + "]";
-                printWriter.print("{\"resultCode\":true,\"state\": \"" + game.getState() + "\",\"cards\":" + cardsDeal + "}");
+                pointDeal = pointDeal.substring(0, cardsDeal.length()-1) + "]";
+                printWriter.print("{\"resultCode\":true,\"state\":" + game.getState() + ",\"cards\":" + cardsDeal + ",\"scores\":" + pointDeal + "}");
                 printWriter.close();
                 break;
             case "hit":
-                value = (String) req.getParameter("value");
+                String boomHit;
                 String addCard = game.addCard();
-                printWriter.print("{\"resultCode\":true,\"state\":\"" + game.getState() + "\",\"cards\":[\"" + addCard + "\"]}");
+                if(game.isPlayerBoom()) {
+                    boomHit = "true";
+                }
+                else {
+                    boomHit = "false";
+                }
+                printWriter.print("{\"resultCode\":true,\"state\":" + game.getState() + ",\"cards\":[" + addCard + "],\"boom\":" + boomHit +",\"scores\":[\"" + game.getPlayerScore() +"\"]}");
                 printWriter.close();
                 break;
             case "double":
                 String[] getDoubled;
                 getDoubled = game.setDouble();
-                printWriter.print("{\"resultCode\":true,\"cards\":[\"" + getDoubled[0] + "\"],\"bet_money\":" + getDoubled[1] +",\"money\":" + getDoubled[2] + "}");
+                String boomDouble;
+                if(game.isPlayerBoom()) {
+                    boomDouble = "true";
+                }
+                else {
+                    boomDouble = "false";
+                }
+                printWriter.print("{\"resultCode\":true,\"cards\":[\"" + getDoubled[0] + "\"],\"bet_money\":" + getDoubled[1] +",\"money\":" + getDoubled[2] + ",\"boom\":"+ boomDouble + ",\"scores\":[\"" + game.getPlayerScore() +"\"]}");
                 printWriter.close();
                 break;
             case "insurance":
@@ -64,12 +88,19 @@ public class BlackJack extends HttpServlet{
                     cardsPass = cardsPass + "\"" + s + "\",";
                 }
                 cardsPass = cardsPass.substring(0, cardsPass.length()-1) + "]";
-                printWriter.print("{\"resultCode\":true,\"state\":" + game.getState() +",\"cards\":" + cardsPass +"}");
+                String boomPass;
+                if(game.isPlayer2Boom()) {
+                    boomPass = "true";
+                }
+                else {
+                    boomPass = "false";
+                }
+                printWriter.print("{\"resultCode\":true,\"state\":" + game.getState() +",\"cards\":" + cardsPass + ",\"boom\":"+ boomPass + "}");
                 printWriter.close();
                 break;
             case  "again":
-                game.again();
-                printWriter.print("{\"resultCode\":true}");
+                int money = game.again();
+                printWriter.print("{\"resultCode\":true,\"money\":" + money + "}");
                 printWriter.close();
             default:
                 break;
