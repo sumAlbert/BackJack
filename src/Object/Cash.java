@@ -14,13 +14,24 @@ public class Cash {//Record player's cash
         temBet = 0;
     }
 
+    public int getMyCash() { return cash; }
+
+    public void setMyCash(int cash) { this.cash = cash; }
+
+    public int getTemBet() { return temBet; }
+
+    public void setTemBet(int temBet) { this.temBet = temBet; }
+
     public int getBet() { return bet; }
+
+    public void setBet(int bet) { this.bet = bet; }
+
+
     public void addBetInSeqence(int money)
     {
-        bet = bet + money;
-        temBet = money;
+        setBet(bet + money);
+        setTemBet(money);
     }
-    public int getMyCash() { return cash; }
 
     /*
     Buy Insurance:

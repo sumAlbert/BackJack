@@ -10,7 +10,6 @@ public class Player {
     private Point point;//Record points in hand
     private Hand hand;//Store the cards that player is handing
     private boolean isLose = false;//Judge whether lose or not
-    private String name;//Player's name
 
     public Player() {
         cash = new Cash();
@@ -18,18 +17,15 @@ public class Player {
         hand = new Hand();
     }
 
-    public Player(String name) {
-        cash = new Cash();
-        point = new Point();
-        hand = new Hand();
-        this.name = name;
-    }
-
     public Cash getCash() {
         return cash;
     }
 
+    public void setCash(Cash cash) { this.cash = cash; }
+
     public Point getPoint() { return point; }
+
+    public void setPoint(Point point) { this.point = point; }
 
     public boolean isLose() {
         return isLose;
@@ -46,15 +42,4 @@ public class Player {
     public void setHand(Hand hand) {
         this.hand = hand;
     }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public boolean isBlackJack() { return point.isBlackjack(); }
-
 }
