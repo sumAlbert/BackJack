@@ -11,6 +11,7 @@ $(document).ready(function(){
     var cardsPlay0Deg=[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0];
     var cardsPlay1Deg=[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0];
     var cardsBankDeg=[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0];
+    var bgCard="";
     //transform control
 
     //function to execute after init web
@@ -88,6 +89,51 @@ $(document).ready(function(){
                 success: function (data) {
                     var JSON_data=JSON.parse(data);
                     if(JSON_data.resultCode){
+                        console.log(JSON_data);
+                    }
+                },
+                error: function () {
+                    console.log("failure");
+                }
+            });
+        }
+        else{
+            $.ajax({
+                url: 'BlackJack',
+                data:{
+                    command: 'deal'
+                },
+                success: function (data) {
+                    console.log(data);
+                    var JSON_data=JSON.parse(data);
+                    if(JSON_data.resultCode){
+                        if(JSON_data.state!=""){
+                            if(JSON_data.state=="/player")
+                                whoSuccess("你");
+                            else
+                                whoSuccess(JSON_data.state);
+                        }
+                        else{
+                            bgCard=JSON_data.cards[0];
+                            setTimeout(function () {
+                                addCardBankDisplay("bg");
+                            },0);
+                            setTimeout(function () {
+                                addCardPlay0Display(JSON_data.cards[1]);
+                            },800);
+                            setTimeout(function () {
+                                addCardPlay1Display(JSON_data.cards[2]);
+                            },1600);
+                            setTimeout(function () {
+                                addCardBankDisplay(JSON_data.cards[3]);
+                            },2400);
+                            setTimeout(function () {
+                                addCardPlay0Display(JSON_data.cards[4]);
+                            },3200);
+                            setTimeout(function () {
+                                addCardPlay1Display(JSON_data.cards[5]);
+                            },4000);
+                        }
                     }
                 },
                 error: function () {
@@ -332,10 +378,11 @@ $(document).ready(function(){
         $("#"+bankID).css({"transform":"rotate("+rotate_deg+")"});
     }
 
-    //TODO who is the success man
+
     //some operation about flag
     function whoSuccess(name){
-
+        $(".game-icon-note").html(name+"赢了!");
+        $(".game-icon-note").show();
     }
 
 

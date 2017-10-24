@@ -34,7 +34,7 @@ public class BlackJack extends HttpServlet{
                     cardsDeal = cardsDeal + "\"" + s + "\",";
                 }
                 cardsDeal = cardsDeal.substring(0, cardsDeal.length()-1) + "]";
-                printWriter.print("{\"resultCode\":true,\"state\":" + game.getState() + ",\"cards\":" + cardsDeal + "}");
+                printWriter.print("{\"resultCode\":true,\"state\": \"" + game.getState() + "\",\"cards\":" + cardsDeal + "}");
                 printWriter.close();
                 break;
             case "hit":
