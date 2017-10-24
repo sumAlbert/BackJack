@@ -232,9 +232,27 @@ $(document).ready(function(){
     }
     /*change back coin position and remove it*/
     function removeCoinDisplay(event){
+        $("#"+event.data.DOM_id).off("click");
         switch (event.data.value){
             case 20:
                 $("#"+event.data.DOM_id).css({"left" : "calc(50% - 2em)","top":"0"});
+                $.ajax({
+                    url: 'BlackJack',
+                    data:{
+                        command: 'bet',
+                        value: '-20'
+                    },
+                    success: function (data) {
+                        var JSON_data=JSON.parse(data);
+                        if(JSON_data.resultCode){
+                            changeBetMoney(JSON_data.bet_money);
+                            changeSaveMoney(JSON_data.money);
+                        }
+                    },
+                    error: function () {
+                        console.log("failure");
+                    }
+                });
                 setTimeout(function () {
                     $("#"+event.data.DOM_id).remove();
                     coinsNum[0]--;
@@ -242,6 +260,23 @@ $(document).ready(function(){
                 break;
             case 50:
                 $("#"+event.data.DOM_id).css({"left" : "calc(30% - 2em)","top":"4em"});
+                $.ajax({
+                    url: 'BlackJack',
+                    data:{
+                        command: 'bet',
+                        value: '-50'
+                    },
+                    success: function (data) {
+                        var JSON_data=JSON.parse(data);
+                        if(JSON_data.resultCode){
+                            changeBetMoney(JSON_data.bet_money);
+                            changeSaveMoney(JSON_data.money);
+                        }
+                    },
+                    error: function () {
+                        console.log("failure");
+                    }
+                });
                 setTimeout(function () {
                     $("#"+event.data.DOM_id).remove();
                     coinsNum[1]--;
@@ -249,6 +284,23 @@ $(document).ready(function(){
                 break;
             case 100:
                 $("#"+event.data.DOM_id).css({"left" : "calc(70% - 2em)","top":"4em"});
+                $.ajax({
+                    url: 'BlackJack',
+                    data:{
+                        command: 'bet',
+                        value: '-100'
+                    },
+                    success: function (data) {
+                        var JSON_data=JSON.parse(data);
+                        if(JSON_data.resultCode){
+                            changeBetMoney(JSON_data.bet_money);
+                            changeSaveMoney(JSON_data.money);
+                        }
+                    },
+                    error: function () {
+                        console.log("failure");
+                    }
+                });
                 setTimeout(function () {
                     $("#"+event.data.DOM_id).remove();
                     coinsNum[2]--;
@@ -450,14 +502,21 @@ $(document).ready(function(){
         }
     }
     /*some change after boom*/
-    function play0Boom(){
-        $("#getInsurance").addClass("game-button-inactive");
-        $("#getDouble").addClass("game-button-inactive");
-        $("#stopCard").addClass("game-button-inactive");
-        $("#getCard").addClass("game-button-inactive");
-        $("#getInsurance").removeClass("game-button-active");
-        $("#getDouble").removeClass("game-button-active");
-        $("#stopCard").removeClass("game-button-active");
-        $("#getCard").removeClass("game-button-active");
+    function someBoom(person){
+        if(person=="play0"){
+            $(".game-icon-note").html("你爆了！！");
+            $(".game-icon-note").show();
+            setTimeout(function () {
+                $(".game-icon-note").hidden();
+            },5000);
+            $("#getInsurance").addClass("game-button-inactive");
+            $("#getDouble").addClass("game-button-inactive");
+            $("#stopCard").addClass("game-button-inactive");
+            $("#getCard").addClass("game-button-inactive");
+            $("#getInsurance").removeClass("game-button-active");
+            $("#getDouble").removeClass("game-button-active");
+            $("#stopCard").removeClass("game-button-active");
+            $("#getCard").removeClass("game-button-active");
+        }
     }
 });
