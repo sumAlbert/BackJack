@@ -30,7 +30,7 @@ html,body{margin:0;padding: 0;height: 100%;width: 100%;}
 .envelop-bottom{height: 16em;position: absolute;width: 8.98em;transform: rotate(-25deg);background: url("../img/decorate/bottom.png") center center no-repeat;background-size: 100% 100%;left: calc(100% - 11em);top: -4em;}
 .init-bg-card-1{height: 11.97em;width: 9em;position: absolute;transform: rotate(-25deg);left: calc(100% - 6em);top: -2.5em;z-index: 1;transform-origin: 50% 100%;}
 .init-bg-card-2{height: 11.97em;width: 9em;position: absolute;transform: rotate(-25deg);left: calc(100% - 7em);top: -3em;z-index: 3;transform-origin: 50% 100%;}
-.init-bg-card-3{height: 11.97em;width: 9em;position: absolute;transform: rotate(-25deg);left: calc(100% - 7em);top: -3em;z-index: 2;transform-origin: 50% 100%;transition: all .7s;}
+.init-bg-card-3{height: 11.97em;width: 9em;position: absolute;transform: rotate(-25deg);left: calc(100% - 7em);top: -3em;z-index: 2;transform-origin: 50% 100%;transition: all 1s;}
 .envelop-upper{height: 16em;position: absolute;width: 8.98em;transform: rotate(-25deg);background: #5e5e5e;left: calc(100% - 8em);top: -6em;z-index: 4;}
 .card{height: 100%;width: 100%;}
 

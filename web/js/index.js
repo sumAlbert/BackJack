@@ -12,7 +12,9 @@ $(document).ready(function(){
     var cardsPlay1Deg=[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0];
     var cardsBankDeg=[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0];
     var bgCard="";
-    //transform control
+    //click_lock
+    var getCard_lock=true;
+    var insurance_lock=false;
 
     //function to execute after init web
     initAndAgain();
@@ -81,68 +83,104 @@ $(document).ready(function(){
 
     /*add cards*/
     $("#getCard").click(function () {
-        if(play0Num){
-            $.ajax({
-                url: 'BlackJack',
-                data:{
-                    command: 'hit'
-                },
-                success: function (data) {
-                    console.log(data);
-                    var JSON_data=JSON.parse(data);
-                    if(JSON_data.resultCode){
-                        bgCard=JSON_data.cards[0];
-                        setTimeout(function () {
-                            addCardPlay0Display(JSON_data.cards[0]);
-                            setScore("play0",JSON_data.scores[0],0);
-                            console.log(JSON_data.boom);
-                        },0);
-                    }
-                },
-                error: function () {
-                    console.log("failure");
-                }
-            });
-        }
-        else{
-            $.ajax({
-                url: 'BlackJack',
-                data:{
-                    command: 'deal'
-                },
-                success: function (data) {
-                    console.log(data);
-                    var JSON_data=JSON.parse(data);
-                    if(JSON_data.resultCode){
-                        bgCard=JSON_data.cards[3];
-                        setTimeout(function () {
-                            addCardBankDisplay(JSON_data.cards[0]);
-                        },0);
-                        setTimeout(function () {
-                            addCardPlay0Display(JSON_data.cards[1]);
-                        },800);
-                        setTimeout(function () {
-                            addCardPlay1Display(JSON_data.cards[2]);
-                        },1600);
-                        setTimeout(function () {
-                            addCardBankDisplay("bg");
-                        },2400);
-                        setTimeout(function () {
-                            addCardPlay0Display(JSON_data.cards[4]);
-                        },3200);
-                        setTimeout(function () {
-                            addCardPlay1Display(JSON_data.cards[5]);
-                        },4000);
-                        setTimeout(function () {
-                            if(JSON_data.scores[0]==JSON_data.scores[2]){
+        if(getCard_lock){
+            getCard_lock=false;
+            if(play0Num){
+                $.ajax({
+                    url: 'BlackJack',
+                    data:{
+                        command: 'hit'
+                    },
+                    success: function (data) {
+                        console.log(data);
+                        var JSON_data=JSON.parse(data);
+                        if(JSON_data.resultCode){
+                            setTimeout(function () {
+                                addCardPlay0Display(JSON_data.cards[0]);
                                 setScore("play0",JSON_data.scores[0],0);
-                                setScore("play1",JSON_data.scores[1],0);
+                                if(JSON_data.boom){
+                                    someBoom("play0");
+                                }
+                            },0);
+                            setTimeout(function () {
+                                getCard_lock=true;
+                            },1000);
+                        }
+                    },
+                    error: function () {
+                        console.log("failure");
+                    }
+                });
+            }
+            else{
+                $.ajax({
+                    url: 'BlackJack',
+                    data:{
+                        command: 'deal'
+                    },
+                    success: function (data) {
+                        console.log(data);
+                        var JSON_data=JSON.parse(data);
+                        if(JSON_data.resultCode){
+                            bgCard=JSON_data.cards[3];
+                            setTimeout(function () {
+                                addCardBankDisplay(JSON_data.cards[0]);
+                            },0);
+                            setTimeout(function () {
+                                addCardPlay0Display(JSON_data.cards[1]);
+                            },800);
+                            setTimeout(function () {
+                                addCardPlay1Display(JSON_data.cards[2]);
+                            },1600);
+                            setTimeout(function () {
+                                addCardBankDisplay("bg");
+                            },2400);
+                            setTimeout(function () {
+                                addCardPlay0Display(JSON_data.cards[4]);
+                            },3200);
+                            setTimeout(function () {
+                                addCardPlay1Display(JSON_data.cards[5]);
+                            },4000);
+                            setTimeout(function () {
+                                if(JSON_data.scores[0]==JSON_data.scores[2]){
+                                    setScore("play0",JSON_data.scores[0],0);
+                                    setScore("play1",JSON_data.scores[1],0);
+                                    getCard_lock=true;
+                                }
+                                else{
+                                    setScore("play0",JSON_data.scores[0],JSON_data.scores[2]);
+                                    setScore("play1",JSON_data.scores[1],0);
+                                    getCard_lock=true;
+                                }
+                            },4800);
+                            if(JSON_data.cards[0]=="A1"||JSON_data.cards[0]=="B1"||JSON_data.cards[0]=="C1"||JSON_data.cards[0]=="D1"){
+                                setTimeout(function () {
+                                    insurance_lock=true;
+                                    $("#getInsurance").removeClass("game-button-inactive");
+                                    $("#getInsurance").addClass("game-button-active");
+                                },4800)
                             }
-                            else{
-                                setScore("play0",JSON_data.scores[0],JSON_data.scores[2]);
-                                setScore("play1",JSON_data.scores[1],0);
-                            }
-                        },4800);
+                        }
+                    },
+                    error: function () {
+                        console.log("failure");
+                    }
+                });
+            }
+        }
+    });
+    $("#getInsurance").click(function () {
+        if(getCard_lock){
+            $.ajax({
+                url: 'BlackJack',
+                data:{
+                    command: 'insurance'
+                },
+                success: function (data) {
+                    console.log(data);
+                    var JSON_data=JSON.parse(data);
+                    if(JSON_data.resultCode){
+                        changeSaveMoney(JSON_data.money);
                     }
                 },
                 error: function () {
@@ -151,6 +189,8 @@ $(document).ready(function(){
             });
         }
     });
+
+
 
     // $.ajax({
     //     url: 'BlackJack',
@@ -328,7 +368,7 @@ $(document).ready(function(){
             play0Num++;
             getNextPlay0Degs();
             correctPlay0CardPositionDisplay(0);
-        },0);
+        },100);
     }
     /*send card to play*/
     function sendCardPlay0Display(play0ID){
@@ -384,7 +424,7 @@ $(document).ready(function(){
             play1Num++;
             getNextPlay1Degs();
             correctPlay1CardPositionDisplay(0);
-        },0);
+        },100);
     }
     /*send card to play*/
     function sendCardPlay1Display(playID){
@@ -420,7 +460,7 @@ $(document).ready(function(){
             bankNum++;
             getNextBankDegs();
             correctBankCardPositionDisplay(0);
-        },0);
+        },100);
     }
     /*send card to play*/
     function sendCardBankDisplay(bankID){
@@ -504,10 +544,11 @@ $(document).ready(function(){
     /*some change after boom*/
     function someBoom(person){
         if(person=="play0"){
+            getCard_lock=false;
             $(".game-icon-note").html("你爆了！！");
             $(".game-icon-note").show();
             setTimeout(function () {
-                $(".game-icon-note").hidden();
+                $(".game-icon-note").hide();
             },5000);
             $("#getInsurance").addClass("game-button-inactive");
             $("#getDouble").addClass("game-button-inactive");
