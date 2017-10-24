@@ -45,7 +45,7 @@ public class BlackJack extends HttpServlet{
                 }
                 cardsDeal = cardsDeal.substring(0, cardsDeal.length()-1) + "]";
                 pointDeal = pointDeal.substring(0, pointDeal.length()-1) + "]";
-                printWriter.print("{\"resultCode\":true,\"state\":" + game.getState() + ",\"cards\":" + cardsDeal + ",\"scores\":" + pointDeal + "}");
+                printWriter.print("{\"resultCode\":true,\"state\":\"" + game.getState() + "\",\"cards\":" + cardsDeal + ",\"scores\":" + pointDeal + "}");
                 printWriter.close();
                 break;
             case "hit":
@@ -57,7 +57,7 @@ public class BlackJack extends HttpServlet{
                 else {
                     boomHit = "false";
                 }
-                printWriter.print("{\"resultCode\":true,\"cards\":[" + addCard + "],\"state\":" + game.getState() + "\"boom\":" + boomHit +",\"scores\":[\"" + game.getPlayerScore() +"\"]}");
+                printWriter.print("{\"resultCode\":true,\"cards\":[\"" + addCard + "\"],\"state\":\"" + game.getState() + "\",\"boom\":" + boomHit +",\"scores\":[\"" + game.getPlayerScore() +"\"]}");
                 printWriter.close();
                 break;
             case "double":

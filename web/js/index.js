@@ -91,20 +91,12 @@ $(document).ready(function(){
                     console.log(data);
                     var JSON_data=JSON.parse(data);
                     if(JSON_data.resultCode){
-                        if(JSON_data.state!=""){
-                            if(JSON_data.state=="player")
-                                whoSuccess("你");
-                            else if(JSON_data.state=="player2")
-                                whoSuccess("玩家二");
-                            else
-                                whoSuccess(JSON_data.state);
-                        }
-                        else{
-                            bgCard=JSON_data.cards[0];
-                            setTimeout(function () {
-                                addCardPlay0Display(JSON_data.cards[0]);
-                            },0);
-                        }
+                        bgCard=JSON_data.cards[0];
+                        setTimeout(function () {
+                            addCardPlay0Display(JSON_data.cards[0]);
+                            setScore("play0",JSON_data.scores[0],0);
+                            console.log(JSON_data.boom);
+                        },0);
                     }
                 },
                 error: function () {
@@ -120,28 +112,38 @@ $(document).ready(function(){
                 },
                 success: function (data) {
                     console.log(data);
-                    // var JSON_data=JSON.parse(data);
-                    // if(JSON_data.resultCode){
-                    //     bgCard=JSON_data.cards[0];
-                    //     setTimeout(function () {
-                    //         addCardBankDisplay(JSON_data.cards[3]);
-                    //     },0);
-                    //     setTimeout(function () {
-                    //         addCardPlay0Display(JSON_data.cards[1]);
-                    //     },800);
-                    //     setTimeout(function () {
-                    //         addCardPlay1Display(JSON_data.cards[2]);
-                    //     },1600);
-                    //     setTimeout(function () {
-                    //         addCardBankDisplay("bg");
-                    //     },2400);
-                    //     setTimeout(function () {
-                    //         addCardPlay0Display(JSON_data.cards[4]);
-                    //     },3200);
-                    //     setTimeout(function () {
-                    //         addCardPlay1Display(JSON_data.cards[5]);
-                    //     },4000);
-                    // }
+                    var JSON_data=JSON.parse(data);
+                    if(JSON_data.resultCode){
+                        bgCard=JSON_data.cards[3];
+                        setTimeout(function () {
+                            addCardBankDisplay(JSON_data.cards[0]);
+                        },0);
+                        setTimeout(function () {
+                            addCardPlay0Display(JSON_data.cards[1]);
+                        },800);
+                        setTimeout(function () {
+                            addCardPlay1Display(JSON_data.cards[2]);
+                        },1600);
+                        setTimeout(function () {
+                            addCardBankDisplay("bg");
+                        },2400);
+                        setTimeout(function () {
+                            addCardPlay0Display(JSON_data.cards[4]);
+                        },3200);
+                        setTimeout(function () {
+                            addCardPlay1Display(JSON_data.cards[5]);
+                        },4000);
+                        setTimeout(function () {
+                            if(JSON_data.scores[0]==JSON_data.scores[2]){
+                                setScore("play0",JSON_data.scores[0],0);
+                                setScore("play1",JSON_data.scores[1],0);
+                            }
+                            else{
+                                setScore("play0",JSON_data.scores[0],JSON_data.scores[2]);
+                                setScore("play1",JSON_data.scores[1],0);
+                            }
+                        },4800);
+                    }
                 },
                 error: function () {
                     console.log("failure");
@@ -434,5 +436,28 @@ $(document).ready(function(){
     /*change bet money*/
     function changeBetMoney(money){
         $(".game-coins-cover").html("押注：$"+money);
+    }
+    /*add change banker score*/
+    function setScore(person,value1,value2){
+        var person_CSS="game-score-"+person;
+        if(value2){
+            $("."+person_CSS).html(value1+"/"+value2);
+            $("."+person_CSS).show();
+        }
+        else{
+            $("."+person_CSS).html(value1);
+            $("."+person_CSS).show();
+        }
+    }
+    /*some change after boom*/
+    function play0Boom(){
+        $("#getInsurance").addClass("game-button-inactive");
+        $("#getDouble").addClass("game-button-inactive");
+        $("#stopCard").addClass("game-button-inactive");
+        $("#getCard").addClass("game-button-inactive");
+        $("#getInsurance").removeClass("game-button-active");
+        $("#getDouble").removeClass("game-button-active");
+        $("#stopCard").removeClass("game-button-active");
+        $("#getCard").removeClass("game-button-active");
     }
 });
