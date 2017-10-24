@@ -40,7 +40,7 @@ public class BlackJack extends HttpServlet{
             case "hit":
                 value = (String) req.getParameter("value");
                 String addCard = game.addCard();
-                printWriter.print("{\"resultCode\":true,\"state\":" + game.getState() + ",\"cards\":[" + addCard + "]}");
+                printWriter.print("{\"resultCode\":true,\"state\":\"" + game.getState() + "\",\"cards\":[\"" + addCard + "\"]}");
                 printWriter.close();
                 break;
             case "double":

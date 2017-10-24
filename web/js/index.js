@@ -87,9 +87,23 @@ $(document).ready(function(){
                     command: 'hit'
                 },
                 success: function (data) {
+                    console.log(data);
                     var JSON_data=JSON.parse(data);
                     if(JSON_data.resultCode){
-                        console.log(JSON_data);
+                        if(JSON_data.state!=""){
+                            if(JSON_data.state=="/player")
+                                whoSuccess("你");
+                            else if(JSON_data.state=="/player2")
+                                whoSuccess("玩家二");
+                            else
+                                whoSuccess(JSON_data.state);
+                        }
+                        else{
+                            bgCard=JSON_data.cards[0];
+                            setTimeout(function () {
+                                addCardPlay0Display(JSON_data.cards[0]);
+                            },0);
+                        }
                     }
                 },
                 error: function () {
@@ -110,6 +124,8 @@ $(document).ready(function(){
                         if(JSON_data.state!=""){
                             if(JSON_data.state=="/player")
                                 whoSuccess("你");
+                            else if(JSON_data.state=="/player2")
+                                whoSuccess("玩家二");
                             else
                                 whoSuccess(JSON_data.state);
                         }
