@@ -15,9 +15,11 @@ $(document).ready(function(){
     //click_lock
     var getCard_lock=true;
     var insurance_lock=false;
+    var double_lock=false;
 
     //function to execute after init web
     initAndAgain();
+
 
     /*add coins*/
     $(".game-coins-column-20").click(function () {
@@ -86,6 +88,8 @@ $(document).ready(function(){
         if(getCard_lock){
             getCard_lock=false;
             if(play0Num){
+                $("#getDouble").removeClass("game-button-active");
+                $("#getDouble").addClass("game-button-inactive");
                 $.ajax({
                     url: 'BlackJack',
                     data:{
@@ -142,6 +146,9 @@ $(document).ready(function(){
                                 addCardPlay1Display(JSON_data.cards[5]);
                             },4000);
                             setTimeout(function () {
+                                double_lock=true;
+                                $("#getDouble").removeClass("game-button-inactive");
+                                $("#getDouble").addClass("game-button-active");
                                 if(JSON_data.scores[0]==JSON_data.scores[2]){
                                     setScore("play0",JSON_data.scores[0],0);
                                     setScore("play1",JSON_data.scores[1],0);
@@ -171,15 +178,23 @@ $(document).ready(function(){
     });
     $("#getInsurance").click(function () {
         if(getCard_lock){
+            getCard_lock=false;
             $.ajax({
                 url: 'BlackJack',
                 data:{
                     command: 'insurance'
                 },
                 success: function (data) {
+                    console.log(data);
                     var JSON_data=JSON.parse(data);
                     if(JSON_data.resultCode){
                         changeSaveMoney(JSON_data.money);
+                        $("#getInsurance").addClass("game-button-inactive");
+                        $("#getInsurance").removeClass("game-button-active");
+                        if(JSON_data.state!=""){
+                            openHiddenCard();
+                            setScore("bank",21,0);
+                        }
                     }
                 },
                 error: function () {
@@ -188,7 +203,30 @@ $(document).ready(function(){
             });
         }
     });
-
+    $("#getDouble").click(function () {
+        $.ajax({
+            url: 'BlackJack',
+            data:{
+                command: 'double'
+            },
+            success: function (data) {
+                var JSON_data=JSON.parse(data);
+                if(JSON_data.resultCode){
+                    changeBetMoney(JSON_data.bet_money);
+                    changeSaveMoney(JSON_data.money);
+                    addCardPlay0Display(JSON_data.cards[0]);
+                    setScore("play0",JSON_data.scores[0],0);
+                    if(JSON_data.boom){
+                        someBoom("play0");
+                    }
+                    passCard();
+                }
+            },
+            error: function () {
+                console.log("failure");
+            }
+        });
+    });
 
 
     // $.ajax({
@@ -558,5 +596,21 @@ $(document).ready(function(){
             $("#stopCard").removeClass("game-button-active");
             $("#getCard").removeClass("game-button-active");
         }
+    }
+    /*return the hidden card of banker*/
+    function openHiddenCard() {
+        $("#bank-1 > img").attr("src","img/cards/"+bgCard+".png");
+    }
+    //TODO
+    /*pass the card*/
+    function passCard(){
+        $("#getInsurance").addClass("game-button-inactive");
+        $("#getDouble").addClass("game-button-inactive");
+        $("#stopCard").addClass("game-button-inactive");
+        $("#getCard").addClass("game-button-inactive");
+        $("#getInsurance").removeClass("game-button-active");
+        $("#getDouble").removeClass("game-button-active");
+        $("#stopCard").removeClass("game-button-active");
+        $("#getCard").removeClass("game-button-active");
     }
 });

@@ -75,7 +75,7 @@ public class BlackJack extends HttpServlet{
                 break;
             case "insurance":
                 String stateInsurance = game.buyInsurance();
-                printWriter.print("{\"resultCode\":true,\"state\":" + stateInsurance + "}");
+                printWriter.print("{\"resultCode\":true,\"state\":\"" + stateInsurance + "\"}");
                 printWriter.close();
                 break;
             case "pass":
