@@ -229,6 +229,7 @@ $(document).ready(function(){
     });
 
 
+
     // $.ajax({
     //     url: 'BlackJack',
     //     data:{
