@@ -83,16 +83,24 @@ public class BlackJack extends HttpServlet{
                 addedCards = game.pass();
                 Iterator<String> itPass = addedCards.iterator();
                 boolean isSplitedPass = false;
+                boolean getStatePass = false;
                 String pointPass = "[";
                 String cardsPass = "[";
+                String statePass = "[";
                 while(itPass.hasNext()) {
                     String s = itPass.next();
                     if(s.equals("?")) {
                         isSplitedPass = true;
                     }
+                    else if(s.equals("!")) {
+                        isSplitedPass = true;
+                    }
                     else {
                         if(isSplitedPass) {
                             pointPass = pointPass + "\"" + s + "\",";
+                        }
+                        else if(getStatePass && !isSplitedPass) {
+                            statePass = statePass + "\"" + s + "\",";
                         }
                         else {
                             cardsPass = cardsPass + "\"" + s + "\",";
@@ -101,6 +109,7 @@ public class BlackJack extends HttpServlet{
                 }
                 cardsPass = cardsPass.substring(0, cardsPass.length()-1) + "]";
                 pointPass = pointPass.substring(0, pointPass.length()-1) + "]";
+                statePass = statePass.substring(0, pointPass.length()-1) + "]";
                 String boomPass;
                 if(game.isPlayer2Boom()) {
                     boomPass = "true";
@@ -108,7 +117,7 @@ public class BlackJack extends HttpServlet{
                 else {
                     boomPass = "false";
                 }
-                printWriter.print("{\"resultCode\":true,\"state\":\"" + game.getState() +"\",\"cards\":" + cardsPass + ",\"boom\":"+ boomPass + ",\"scores\":" + pointPass + "}");
+                printWriter.print("{\"resultCode\":true,\"state\":" + statePass +",\"cards\":" + cardsPass + ",\"boom\":"+ boomPass + ",\"scores\":" + pointPass + "}");
                 printWriter.close();
                 break;
             case  "again":

@@ -121,6 +121,8 @@ public class Game {
         player2.setLose(false);
         state = "";
         isGameOver = false;
+        player.getCash().setBet(0);
+        player.getCash().setTemBet(0);
         return player.getCash().getMyCash();
     }
 
@@ -135,18 +137,26 @@ public class Game {
         int player2Point = player2.getPoint().getMyPoint(player2.getHand());
         if(bankerPoint > 21) {
             if(!player.isLose() && !player2.isLose()) {
-                state = "player/player2";
+                newCard.add("!");//"!" is an separator, followed by the state of player and player2 in sequence.
+                newCard.add("2");
+                newCard.add("2");
                 player.getCash().update(7);
                 isGameOver = true;
             }
             else if(player.isLose() && !player2.isLose()) {
-                state = "player2";
+                newCard.add("!");
+                newCard.add("1");
+                newCard.add("2");
             }
             else if(!player.isLose() && player2.isLose()) {
-                state = "player";
+                newCard.add("!");
+                newCard.add("2");
+                newCard.add("1");
             }
             else {
-                state = "banker/player/player2";
+                newCard.add("!");
+                newCard.add("1");
+                newCard.add("1");
             }
         }
         else if(bankerPoint > playerPoint) {
@@ -154,52 +164,70 @@ public class Game {
             isGameOver = true;
             if(!player2.isLose()) {
                 if (bankerPoint < player2Point) {
-                    state = "player2";
+                    newCard.add("!");
+                    newCard.add("0");
+                    newCard.add("2");
                 } else if (bankerPoint == player2Point) {
-                    state = "banker/player2";
+                    newCard.add("!");
+                    newCard.add("0");
+                    newCard.add("1");
                 } else {
-                    state = "banker";
+                    newCard.add("!");
+                    newCard.add("0");
+                    newCard.add("0");
                 }
             }
             else {
-                state = "banker";
+                newCard.add("!");
+                newCard.add("0");
+                newCard.add("0");
             }
         }
         else if(bankerPoint == playerPoint) {
             player.getCash().update(6);
             isGameOver = true;
             if (bankerPoint == player2Point) {
-                state = "banker/player/player2";
+                newCard.add("!");
+                newCard.add("1");
+                newCard.add("1");
             }
             else if(bankerPoint < player2Point) {
                 if(player2.isLose()) {
-                    state = "banker/player";
+                    newCard.add("!");
+                    newCard.add("1");
+                    newCard.add("0");
                 }
                 else {
-                    state = "player2";
+                    newCard.add("!");
+                    newCard.add("1");
+                    newCard.add("2");
                 }
             }
             else if(bankerPoint > player2Point) {
-                if(!player.isLose()) {
-                    state = "banker/player";
-                }
-                else {
-                    state = "player2";
-                }
+                newCard.add("!");
+                newCard.add("1");
+                newCard.add("0");
+
             }
         }
         else {
-            if(player.isLose()) {//Player2 is not lose
+            if(player.isLose()) {//Player2 is not lose, as is tested in addToPlayer2()
                 player.getCash().update(5);
                 isGameOver = true;
                 if (bankerPoint < player2Point) {
-                    state = "player2";
+                    newCard.add("!");
+                    newCard.add("0");
+                    newCard.add("2");
                 }
                 else if(bankerPoint == player2Point){
-                    state = "banker/player2";
+                    newCard.add("!");
+                    newCard.add("0");
+                    newCard.add("1");
                 }
                 else {
-                    state = "banker";
+                    newCard.add("!");
+                    newCard.add("0");
+                    newCard.add("0");
                 }
             }
             else {
@@ -207,14 +235,25 @@ public class Game {
                 isGameOver = true;
                 if(!player2.isLose()) {
                     if (bankerPoint < player2Point) {
-                        state = "player/player2";
+                        newCard.add("!");
+                        newCard.add("2");
+                        newCard.add("2");
+                    }
+                    else if(bankerPoint == player2Point){
+                        newCard.add("!");
+                        newCard.add("2");
+                        newCard.add("1");
                     }
                     else {
-                        state = "player";
+                        newCard.add("!");
+                        newCard.add("2");
+                        newCard.add("0");
                     }
                 }
                 else {
-                    state = "player";
+                    newCard.add("!");
+                    newCard.add("2");
+                    newCard.add("0");
                 }
             }
         }
@@ -258,17 +297,17 @@ public class Game {
         }*/
         while(player2.getPoint().getMyPoint(player2.getHand()) <= 17) {
             String newPok = poker.getNextCard();
-            banker.getHand().addCard(newPok);
+            player2.getHand().addCard(newPok);
             newCard.add(newPok);
         }
-        int bankerPoint = banker.getPoint().getMyPoint(banker.getHand());
-        int playerPoint = player.getPoint().getMyPoint(player.getHand());
         int player2Point = player2.getPoint().getMyPoint(player2.getHand());
         if(player2Point > 21) {
             player2.setLose(true);
         }
         if(player.isLose() && player2.isLose()) {
-            state = "banker";
+            newCard.add("!");
+            newCard.add("0");
+            newCard.add("0");
             isGameOver = true;
         }
         return newCard;
