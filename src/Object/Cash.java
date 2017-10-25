@@ -10,7 +10,7 @@ public class Cash {//Record player's cash
 
     public Cash(){
         bet = 0;
-        cash = 1000;
+        cash = 100000;
         temBet = 0;
     }
 
