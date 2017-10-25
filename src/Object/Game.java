@@ -73,7 +73,7 @@ public class Game {
         return newPok;
     }
 
-    public String buyInsurance() {//Player buys insurance
+    public String[] buyInsurance() {//Player buys insurance
         if(banker.getPoint().getMyPoint(banker.getHand()) == 21) {
             player.getCash().update(3);
             state = "banker";
@@ -81,7 +81,8 @@ public class Game {
         else {
             player.getCash().update(4);
         }
-        return state;
+        String[] recordInsurance = new String[]{state,Integer.toString(player.getCash().getMyCash())};
+        return recordInsurance;
     }
 
     public String[] setDouble() {//a[0] and a[1] record bet_money and money and a[2] record the card added
