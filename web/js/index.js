@@ -42,6 +42,12 @@ $(document).ready(function(){
                     else{
                         getCard_lock=true;
                     }
+                    if(JSON_data.money < 0){
+                        getCard_lock=false;
+                    }
+                    else{
+                        getCard_lock=true;
+                    }
                 }
                 addCoinDisplay(20)
             },
@@ -68,6 +74,12 @@ $(document).ready(function(){
                     else{
                         getCard_lock=true;
                     }
+                    if(JSON_data.money < 0){
+                        getCard_lock=false;
+                    }
+                    else{
+                        getCard_lock=true;
+                    }
                 }
                 addCoinDisplay(50)
             },
@@ -89,6 +101,12 @@ $(document).ready(function(){
                     changeBetMoney(JSON_data.bet_money);
                     changeSaveMoney(JSON_data.money);
                     if(JSON_data.bet_money=="0"){
+                        getCard_lock=false;
+                    }
+                    else{
+                        getCard_lock=true;
+                    }
+                    if(JSON_data.money < 0){
                         getCard_lock=false;
                     }
                     else{
@@ -129,7 +147,10 @@ $(document).ready(function(){
                         if(JSON_data.resultCode){
                             setTimeout(function () {
                                 addCardPlay0Display(JSON_data.cards[0]);
-                                setScore("play0",JSON_data.scores[0],0);
+                                if(JSON_data.scores[0]==JSON_data.scores[1])
+                                    setScore("play0",JSON_data.scores[0],0);
+                                else
+                                    setScore("play0",JSON_data.scores[0],JSON_data.scores[1]);
                                 if(JSON_data.boom){
                                     someBoom("play0");
                                     passCards();
@@ -375,6 +396,12 @@ $(document).ready(function(){
                             else{
                                 getCard_lock=true;
                             }
+                            if(JSON_data.money < 0){
+                                getCard_lock=false;
+                            }
+                            else{
+                                getCard_lock=true;
+                            }
                         }
                     },
                     error: function () {
@@ -405,6 +432,12 @@ $(document).ready(function(){
                             else{
                                 getCard_lock=true;
                             }
+                            if(JSON_data.money < 0){
+                                getCard_lock=false;
+                            }
+                            else{
+                                getCard_lock=true;
+                            }
                         }
                     },
                     error: function () {
@@ -430,6 +463,12 @@ $(document).ready(function(){
                             changeBetMoney(JSON_data.bet_money);
                             changeSaveMoney(JSON_data.money);
                             if(JSON_data.bet_money=="0"){
+                                getCard_lock=false;
+                            }
+                            else{
+                                getCard_lock=true;
+                            }
+                            if(JSON_data.money < 0){
                                 getCard_lock=false;
                             }
                             else{
@@ -566,10 +605,10 @@ $(document).ready(function(){
     //some operation about flag
     function whoSuccess(result){
         switch (result[0]){
-            case 0:
+            case "0":
                 result[0]="输";
                 break;
-            case 1:
+            case "1":
                 result[0]="平";
                 break;
             default:
@@ -577,16 +616,18 @@ $(document).ready(function(){
                 break;
         }
         switch (result[1]){
-            case 0:
+            case "0":
                 result[1]="输";
                 break;
-            case 1:
+            case "1":
                 result[1]="平";
                 break;
             default:
                 result[1]="赢";
                 break;
         }
+        $("#getCard").removeClass("game-button-inactive");
+        $("#getCard").addClass("game-button-active");
         $(".game-icon-note").html("玩家一:"+result[0]+",玩家二:"+result[1]);
         $(".game-icon-note").show();
         setTimeout(function () {
@@ -609,6 +650,7 @@ $(document).ready(function(){
                     var person="play0";
                     var cards=JSON_data.cards;
                     var scores=JSON_data.scores;
+                    var state=JSON_data.state;
                     for(var i=0;i<cards.length;i++){
                         let kind=cards[i];
                         setTimeout(function () {
@@ -627,6 +669,7 @@ $(document).ready(function(){
                     setTimeout(function () {
                         setScore("play1",scores[0],0);
                         setScore("bank",scores[1],0);
+                        whoSuccess(state);
                         openHiddenCard();
                     },800*cards.length);
                 }
