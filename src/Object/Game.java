@@ -269,40 +269,6 @@ public class Game {
     }
 
     private ArrayList<String> addToPlayer2(ArrayList<String> newCard) {//Automatically add cards to player2
-        /*if(playerPoint == 21) {//The Player get 21 point
-            if(playerPoint == bankerPoint) {
-                player.getCash().update(6);
-                isGameOver = true;
-                if(playerPoint == player2Point) {
-                    state = "banker/player/player2";
-                }
-                else {
-                    state = "banker/player";
-                }
-            }
-            else {
-            if(playerPoint == player2Point) {
-                state = "player/player2";
-                player.getCash().update(7);
-                isGameOver = true;
-            }
-            else {
-                state = "player";
-                player.getCash().update(7);
-                isGameOver = true;
-            }
-        }
-    }
-        else if(player2Point == 21) {
-            if (player2Point == bankerPoint) {
-                isGameOver = true;
-                state = "banker/player2";
-            }
-            else {
-                isGameOver = true;
-                state = "player2";
-            }
-        }*/
         while(player2.getPoint().getMyPoint(player2.getHand()) <= 17) {
             String newPok = poker.getNextCard();
             player2.getHand().addCard(newPok);
