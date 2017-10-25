@@ -295,6 +295,7 @@ public class Game {
                 state = "player2";
             }
         }*/
+        //123
         while(player2.getPoint().getMyPoint(player2.getHand()) <= 17) {
             String newPok = poker.getNextCard();
             player2.getHand().addCard(newPok);
