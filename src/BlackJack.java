@@ -93,7 +93,7 @@ public class BlackJack extends HttpServlet{
                         isSplitedPass = true;
                     }
                     else if(s.equals("!")) {
-                        isSplitedPass = true;
+                        getStatePass = true;
                     }
                     else {
                         if(isSplitedPass) {
@@ -109,7 +109,7 @@ public class BlackJack extends HttpServlet{
                 }
                 cardsPass = cardsPass.substring(0, cardsPass.length()-1) + "]";
                 pointPass = pointPass.substring(0, pointPass.length()-1) + "]";
-                statePass = statePass.substring(0, pointPass.length()-1) + "]";
+                statePass = statePass.substring(0, statePass.length()-1) + "]";
                 String boomPass;
                 if(game.isPlayer2Boom()) {
                     boomPass = "true";
