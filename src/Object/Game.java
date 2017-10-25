@@ -149,16 +149,22 @@ public class Game {
                 newCard.add("!");
                 newCard.add("1");
                 newCard.add("2");
+                player.getCash().update(6);
+                isGameOver = true;
             }
             else if(!player.isLose() && player2.isLose()) {
                 newCard.add("!");
                 newCard.add("2");
                 newCard.add("1");
+                player.getCash().update(7);
+                isGameOver = true;
             }
             else {
                 newCard.add("!");
                 newCard.add("1");
                 newCard.add("1");
+                player.getCash().update(6);
+                isGameOver = true;
             }
         }
         else if(bankerPoint > playerPoint) {

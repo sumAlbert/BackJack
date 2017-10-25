@@ -49,6 +49,7 @@ public class Cash {//Record player's cash
                 break;
             case 3:
                 cash = cash + bet/2;
+                break;
             case 4:
                 cash = cash - bet/2;
                 break;
