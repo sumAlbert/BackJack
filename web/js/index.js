@@ -564,9 +564,34 @@ $(document).ready(function(){
 
 
     //some operation about flag
-    function whoSuccess(name){
-        $(".game-icon-note").html(name+"赢了!");
+    function whoSuccess(result){
+        switch (result[0]){
+            case 0:
+                result[0]="输";
+                break;
+            case 1:
+                result[0]="平";
+                break;
+            default:
+                result[0]="赢";
+                break;
+        }
+        switch (result[1]){
+            case 0:
+                result[1]="输";
+                break;
+            case 1:
+                result[1]="平";
+                break;
+            default:
+                result[1]="赢";
+                break;
+        }
+        $(".game-icon-note").html("玩家一:"+result[0]+",玩家二:"+result[1]);
         $(".game-icon-note").show();
+        setTimeout(function () {
+            $(".game-icon-note").hide();
+        },5000);
     }
 
     //pass the card
