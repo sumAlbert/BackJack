@@ -64,13 +64,15 @@ public class Game {
         return totalCards;
     }
 
-    public String addCard() {//Add card to player
+    public String[] addCard() {//Add card to player
         String newPok = poker.getNextCard();
         player.getHand().addCard(newPok);
         if(player.getPoint().getMyPoint(player.getHand()) > 21) {
             player.setLose(true);
         }
-        return newPok;
+        String[] addedCard = new String[]{newPok,Integer.toString(player.getPoint().getMinPoint(player.getHand())),Integer.toString(player.getPoint().getMyPoint(player.getHand()))};
+
+        return addedCard;
     }
 
     public String[] buyInsurance() {//Player buys insurance

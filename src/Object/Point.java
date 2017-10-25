@@ -15,7 +15,7 @@ public class Point {//calculate the total point of card
 
     public int getMyPoint(Hand totalCard) {//Get total point of cards in hand
         point = 0;
-        boolean hasA = false;//Judge whether has an A
+        int hasA = 0;//Judge whether has an A
         ArrayList<String> cards = totalCard.getHandCard();
         Iterator<String> it = cards.iterator();
         while(it.hasNext()) {
@@ -26,7 +26,7 @@ public class Point {//calculate the total point of card
                     break;
                 case '1':
                     point += 1;
-                    hasA = true;
+                    hasA ++;
                     break;
                 case '2':
                     point += 2;
@@ -60,8 +60,9 @@ public class Point {//calculate the total point of card
                     break;
             }
         }
-        if(hasA && point <= 11) {
+        while(hasA != 0 && point <= 11) {
             point += 10;
+            hasA--;
         }
         return point;
     }

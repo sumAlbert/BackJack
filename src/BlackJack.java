@@ -50,14 +50,14 @@ public class BlackJack extends HttpServlet{
                 break;
             case "hit":
                 String boomHit;
-                String addCard = game.addCard();
+                String[] addCard = game.addCard();
                 if(game.isPlayerBoom()) {
                     boomHit = "true";
                 }
                 else {
                     boomHit = "false";
                 }
-                printWriter.print("{\"resultCode\":true,\"cards\":[\"" + addCard + "\"],\"state\":\"" + game.getState() + "\",\"boom\":" + boomHit +",\"scores\":[\"" + game.getPlayerScore() +"\"]}");
+                printWriter.print("{\"resultCode\":true,\"cards\":[\"" + addCard[0] + "\"],\"state\":\"" + game.getState() + "\",\"boom\":" + boomHit +",\"scores\":[\"" + addCard[1] +"\",\"" + addCard[2] + "\"]}");
                 printWriter.close();
                 break;
             case "double":
