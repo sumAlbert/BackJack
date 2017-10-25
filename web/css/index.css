@@ -36,7 +36,7 @@ html,body{margin:0;padding: 0;height: 100%;width: 100%;}
 
 /*gam icon column*/
 .game-icon-column{height: 100%;width: 100%;background: transparent;position: absolute;overflow: hidden;}
-.game-icon-note{display: none;color: white;background: #EF737D;width: 11em;height: 2.6em;line-height: 2.6em;text-align:center;border-radius: 1.3em; position: absolute;font-size: 115%;left: calc(50% - 5.5em);top: calc(50% - 1.3em);z-index: 30;user-select: none;}
+.game-icon-note{display: none;color: white;background: #EF737D;width: 13em;height: 2.6em;line-height: 2.6em;text-align:center;border-radius: 1.3em; position: absolute;font-size: 115%;left: calc(50% - 5.5em);top: calc(50% - 1.3em);z-index: 30;user-select: none;}
 .game-score-bank{display: none;color: #333;background: white;width: 4em;height: 4em;border: .25em solid #777;line-height: 4em;text-align:center;border-radius: 50%; position: absolute;font-size: 130%;left: calc(50% + 2.5em);top: calc( 10% + 1em);z-index: 30;user-select: none;}
 .game-score-play0{display: none;color: #333;background: white;width: 4em;height: 4em;border: .25em solid #777;line-height: 4em;text-align:center;border-radius: 50%; position: absolute;font-size: 130%;left: calc(50% + 2.5em);top: 70%;z-index: 30;user-select: none;}
 .game-score-play1{display: none;color: #333;background: white;width: 4em;height: 4em;border: .25em solid #777;line-height: 4em;text-align:center;border-radius: 50%; position: absolute;font-size: 130%;left: calc(80% + 2.5em);top: 44%;z-index: 30;user-select: none;}
