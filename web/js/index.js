@@ -18,6 +18,7 @@ $(document).ready(function(){
     var double_lock=false;
     var stop_lock=false;
     var again_lock=false;
+    var coin_lock=true;
 
     //function to execute after init web
     againGame();
@@ -25,100 +26,106 @@ $(document).ready(function(){
 
     /*add coins*/
     $(".game-coins-column-20").click(function () {
-        $.ajax({
-            url: 'BlackJack',
-            data:{
-                command: 'bet',
-                value: '20'
-            },
-            success: function (data) {
-                var JSON_data=JSON.parse(data);
-                if(JSON_data.resultCode){
-                    changeBetMoney(JSON_data.bet_money);
-                    changeSaveMoney(JSON_data.money);
-                    if(JSON_data.bet_money=="0"){
-                        getCard_lock=false;
+        if(coin_lock){
+            $.ajax({
+                url: 'BlackJack',
+                data:{
+                    command: 'bet',
+                    value: '20'
+                },
+                success: function (data) {
+                    var JSON_data=JSON.parse(data);
+                    if(JSON_data.resultCode){
+                        changeBetMoney(JSON_data.bet_money);
+                        changeSaveMoney(JSON_data.money);
+                        if(JSON_data.bet_money=="0"){
+                            getCard_lock=false;
+                        }
+                        else{
+                            getCard_lock=true;
+                        }
+                        if(JSON_data.money < 0){
+                            getCard_lock=false;
+                        }
+                        else{
+                            getCard_lock=true;
+                        }
                     }
-                    else{
-                        getCard_lock=true;
-                    }
-                    if(JSON_data.money < 0){
-                        getCard_lock=false;
-                    }
-                    else{
-                        getCard_lock=true;
-                    }
+                    addCoinDisplay(20)
+                },
+                error: function () {
+                    console.log("failure");
                 }
-                addCoinDisplay(20)
-            },
-            error: function () {
-                console.log("failure");
-            }
-        });
+            });
+        }
     });
     $(".game-coins-column-50").click(function () {
-        $.ajax({
-            url: 'BlackJack',
-            data:{
-                command: 'bet',
-                value: '50'
-            },
-            success: function (data) {
-                var JSON_data=JSON.parse(data);
-                if(JSON_data.resultCode){
-                    changeBetMoney(JSON_data.bet_money);
-                    changeSaveMoney(JSON_data.money);
-                    if(JSON_data.bet_money=="0"){
-                        getCard_lock=false;
+        if(coin_lock) {
+            $.ajax({
+                url: 'BlackJack',
+                data: {
+                    command: 'bet',
+                    value: '50'
+                },
+                success: function (data) {
+                    var JSON_data = JSON.parse(data);
+                    if (JSON_data.resultCode) {
+                        changeBetMoney(JSON_data.bet_money);
+                        changeSaveMoney(JSON_data.money);
+                        if (JSON_data.bet_money == "0") {
+                            getCard_lock = false;
+                        }
+                        else {
+                            getCard_lock = true;
+                        }
+                        if (JSON_data.money < 0) {
+                            getCard_lock = false;
+                        }
+                        else {
+                            getCard_lock = true;
+                        }
                     }
-                    else{
-                        getCard_lock=true;
-                    }
-                    if(JSON_data.money < 0){
-                        getCard_lock=false;
-                    }
-                    else{
-                        getCard_lock=true;
-                    }
+                    addCoinDisplay(50)
+                },
+                error: function () {
+                    console.log("failure");
                 }
-                addCoinDisplay(50)
-            },
-            error: function () {
-                console.log("failure");
-            }
-        });
+            });
+        }
     });
     $(".game-coins-column-100").click(function () {
-        $.ajax({
-            url: 'BlackJack',
-            data:{
-                command: 'bet',
-                value: '100'
-            },
-            success: function (data) {
-                var JSON_data=JSON.parse(data);
-                if(JSON_data.resultCode){
-                    changeBetMoney(JSON_data.bet_money);
-                    changeSaveMoney(JSON_data.money);
-                    if(JSON_data.bet_money=="0"){
-                        getCard_lock=false;
+        if(coin_lock) {
+            $.ajax({
+                url: 'BlackJack',
+                data: {
+                    command: 'bet',
+                    value: '100'
+                },
+                success: function (data) {
+                    var JSON_data = JSON.parse(data);
+                    if (JSON_data.resultCode) {
+                        changeBetMoney(JSON_data.bet_money);
+                        changeSaveMoney(JSON_data.money);
+                        if (JSON_data.bet_money == "0") {
+                            getCard_lock = false;
+                        }
+                        else {
+                            getCard_lock = true;
+                        }
+                        if (JSON_data.money < 0) {
+                            getCard_lock = false;
+                        }
+                        else {
+                            getCard_lock = true;
+                        }
                     }
-                    else{
-                        getCard_lock=true;
-                    }
-                    if(JSON_data.money < 0){
-                        getCard_lock=false;
-                    }
-                    else{
-                        getCard_lock=true;
-                    }
+                    addCoinDisplay(100)
+                },
+                error: function () {
+                    console.log("failure");
                 }
-                addCoinDisplay(100)
-            },
-            error: function () {
-                console.log("failure");
-            }
-        });
+            });
+        }
     });
 
     /*add cards*/
@@ -136,6 +143,7 @@ $(document).ready(function(){
                 $("#getDouble").addClass("game-button-inactive");
                 $("#getInsurance").removeClass("game-button-active");
                 $("#getInsurance").addClass("game-button-inactive");
+                coin_lock=false;
                 $.ajax({
                     url: 'BlackJack',
                     data:{
@@ -168,6 +176,7 @@ $(document).ready(function(){
                 });
             }
             else{
+                coin_lock=false;
                 $.ajax({
                     url: 'BlackJack',
                     data:{
@@ -219,6 +228,11 @@ $(document).ready(function(){
                                     insurance_lock=true;
                                     $("#getInsurance").removeClass("game-button-inactive");
                                     $("#getInsurance").addClass("game-button-active");
+                                    $(".game-icon-note").html("是否购买保险？");
+                                    $(".game-icon-note").show();
+                                    setTimeout(function () {
+                                        $(".game-icon-note").hide();
+                                    },1000);
                                 },4800)
                             }
                         }
@@ -248,10 +262,22 @@ $(document).ready(function(){
                         if(JSON_data.state!=""){
                             openHiddenCard();
                             setScore("bank",21,0);
+                            $(".game-icon-note").html("庄家是BlackJack，本轮结束");
+                            $(".game-icon-note").show();
+                            setTimeout(function () {
+                                $(".game-icon-note").hide();
+                            },5000);
                             getCard_lock=false;
                             insurance_lock=false;
                             double_lock=false;
                             stop_lock=false;
+                        }
+                        else{
+                            $(".game-icon-note").html("庄家不是BlackJack，本轮继续");
+                            $(".game-icon-note").show();
+                            setTimeout(function () {
+                                $(".game-icon-note").hide();
+                            },1000);
                         }
                     }
                 },
@@ -297,6 +323,7 @@ $(document).ready(function(){
 
 
     function againGame(){
+        coin_lock=true;
         $.ajax({
             url: 'BlackJack',
             data:{
@@ -375,119 +402,121 @@ $(document).ready(function(){
         }
     }
     /*change back coin position and remove it*/
-    function removeCoinDisplay(event){
-        $("#"+event.data.DOM_id).off("click");
-        switch (event.data.value){
-            case 20:
-                $("#"+event.data.DOM_id).css({"left" : "calc(50% - 2em)","top":"0"});
-                $.ajax({
-                    url: 'BlackJack',
-                    data:{
-                        command: 'bet',
-                        value: '-20'
-                    },
-                    success: function (data) {
-                        var JSON_data=JSON.parse(data);
-                        if(JSON_data.resultCode){
-                            changeBetMoney(JSON_data.bet_money);
-                            changeSaveMoney(JSON_data.money);
-                            if(JSON_data.bet_money=="0"){
-                                getCard_lock=false;
+    function removeCoinDisplay(event) {
+        if (coin_lock) {
+            $("#" + event.data.DOM_id).off("click");
+            switch (event.data.value) {
+                case 20:
+                    $("#" + event.data.DOM_id).css({"left": "calc(50% - 2em)", "top": "0"});
+                    $.ajax({
+                        url: 'BlackJack',
+                        data: {
+                            command: 'bet',
+                            value: '-20'
+                        },
+                        success: function (data) {
+                            var JSON_data = JSON.parse(data);
+                            if (JSON_data.resultCode) {
+                                changeBetMoney(JSON_data.bet_money);
+                                changeSaveMoney(JSON_data.money);
+                                if (JSON_data.bet_money == "0") {
+                                    getCard_lock = false;
+                                }
+                                else {
+                                    getCard_lock = true;
+                                }
+                                if (JSON_data.money < 0) {
+                                    getCard_lock = false;
+                                }
+                                else {
+                                    getCard_lock = true;
+                                }
                             }
-                            else{
-                                getCard_lock=true;
-                            }
-                            if(JSON_data.money < 0){
-                                getCard_lock=false;
-                            }
-                            else{
-                                getCard_lock=true;
-                            }
+                        },
+                        error: function () {
+                            console.log("failure");
                         }
-                    },
-                    error: function () {
-                        console.log("failure");
-                    }
-                });
-                setTimeout(function () {
-                    $("#"+event.data.DOM_id).remove();
-                    coinsNum[0]--;
-                },1000);
-                break;
-            case 50:
-                $("#"+event.data.DOM_id).css({"left" : "calc(30% - 2em)","top":"4em"});
-                $.ajax({
-                    url: 'BlackJack',
-                    data:{
-                        command: 'bet',
-                        value: '-50'
-                    },
-                    success: function (data) {
-                        var JSON_data=JSON.parse(data);
-                        if(JSON_data.resultCode){
-                            changeBetMoney(JSON_data.bet_money);
-                            changeSaveMoney(JSON_data.money);
-                            if(JSON_data.bet_money=="0"){
-                                getCard_lock=false;
+                    });
+                    setTimeout(function () {
+                        $("#" + event.data.DOM_id).remove();
+                        coinsNum[0]--;
+                    }, 1000);
+                    break;
+                case 50:
+                    $("#" + event.data.DOM_id).css({"left": "calc(30% - 2em)", "top": "4em"});
+                    $.ajax({
+                        url: 'BlackJack',
+                        data: {
+                            command: 'bet',
+                            value: '-50'
+                        },
+                        success: function (data) {
+                            var JSON_data = JSON.parse(data);
+                            if (JSON_data.resultCode) {
+                                changeBetMoney(JSON_data.bet_money);
+                                changeSaveMoney(JSON_data.money);
+                                if (JSON_data.bet_money == "0") {
+                                    getCard_lock = false;
+                                }
+                                else {
+                                    getCard_lock = true;
+                                }
+                                if (JSON_data.money < 0) {
+                                    getCard_lock = false;
+                                }
+                                else {
+                                    getCard_lock = true;
+                                }
                             }
-                            else{
-                                getCard_lock=true;
-                            }
-                            if(JSON_data.money < 0){
-                                getCard_lock=false;
-                            }
-                            else{
-                                getCard_lock=true;
-                            }
+                        },
+                        error: function () {
+                            console.log("failure");
                         }
-                    },
-                    error: function () {
-                        console.log("failure");
-                    }
-                });
-                setTimeout(function () {
-                    $("#"+event.data.DOM_id).remove();
-                    coinsNum[1]--;
-                },1000);
-                break;
-            case 100:
-                $("#"+event.data.DOM_id).css({"left" : "calc(70% - 2em)","top":"4em"});
-                $.ajax({
-                    url: 'BlackJack',
-                    data:{
-                        command: 'bet',
-                        value: '-100'
-                    },
-                    success: function (data) {
-                        var JSON_data=JSON.parse(data);
-                        if(JSON_data.resultCode){
-                            changeBetMoney(JSON_data.bet_money);
-                            changeSaveMoney(JSON_data.money);
-                            if(JSON_data.bet_money=="0"){
-                                getCard_lock=false;
+                    });
+                    setTimeout(function () {
+                        $("#" + event.data.DOM_id).remove();
+                        coinsNum[1]--;
+                    }, 1000);
+                    break;
+                case 100:
+                    $("#" + event.data.DOM_id).css({"left": "calc(70% - 2em)", "top": "4em"});
+                    $.ajax({
+                        url: 'BlackJack',
+                        data: {
+                            command: 'bet',
+                            value: '-100'
+                        },
+                        success: function (data) {
+                            var JSON_data = JSON.parse(data);
+                            if (JSON_data.resultCode) {
+                                changeBetMoney(JSON_data.bet_money);
+                                changeSaveMoney(JSON_data.money);
+                                if (JSON_data.bet_money == "0") {
+                                    getCard_lock = false;
+                                }
+                                else {
+                                    getCard_lock = true;
+                                }
+                                if (JSON_data.money < 0) {
+                                    getCard_lock = false;
+                                }
+                                else {
+                                    getCard_lock = true;
+                                }
                             }
-                            else{
-                                getCard_lock=true;
-                            }
-                            if(JSON_data.money < 0){
-                                getCard_lock=false;
-                            }
-                            else{
-                                getCard_lock=true;
-                            }
+                        },
+                        error: function () {
+                            console.log("failure");
                         }
-                    },
-                    error: function () {
-                        console.log("failure");
-                    }
-                });
-                setTimeout(function () {
-                    $("#"+event.data.DOM_id).remove();
-                    coinsNum[2]--;
-                },1000);
-                break;
-            default:
-                break;
+                    });
+                    setTimeout(function () {
+                        $("#" + event.data.DOM_id).remove();
+                        coinsNum[2]--;
+                    }, 1000);
+                    break;
+                default:
+                    break;
+            }
         }
     }
 
@@ -775,23 +804,4 @@ $(document).ready(function(){
         double_lock=false;
         stop_lock=false;
     }
-
-    // $.ajax({
-    //     url: 'BlackJack',
-    //     data:{
-    //         command: 'bet',
-    //         value: '100'
-    //     },
-    //     success: function (data) {
-    //         var JSON_data=JSON.parse(data);
-    //         if(JSON_data.resultCode){
-    //             changeBetMoney(JSON_data.bet_money);
-    //             changeSaveMoney(JSON_data.money);
-    //         }
-    //         addCoinDisplay(100)
-    //     },
-    //     error: function () {
-    //         console.log("failure");
-    //     }
-    // });
 });
